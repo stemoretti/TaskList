@@ -67,9 +67,7 @@ AppStackPage {
 
         MenuItem {
             text: qsTr("Delete task")
-            onTriggered: {
-                clist.tasks.remove(taskMenu.task)
-            }
+            onTriggered: clist.tasks.remove(taskMenu.task)
         }
     }
 
@@ -82,14 +80,8 @@ AppStackPage {
         y: -appToolBar.height + 6
         transformOrigin: Menu.TopRight
 
-        onAboutToShow: {
-            enabled = true
-        }
-
-        onAboutToHide: {
-            // reset highlighting
-            currentIndex = -1
-        }
+        onAboutToShow: enabled = true
+        onAboutToHide: currentIndex = -1 // reset highlighting
 
         MenuItem {
             enabled: clist
@@ -114,17 +106,13 @@ AppStackPage {
         MenuItem {
             enabled: clist && clist.tasks.count
             text: sortList ? qsTr("Custom Order") : qsTr("Sort By Due Date")
-            onTriggered: {
-                clist.sortByDueDate = !clist.sortByDueDate
-            }
+            onTriggered: clist.sortByDueDate = !clist.sortByDueDate
         }
 
         MenuItem {
             enabled: clist && clist.tasks.count
             text: hideCompleted ? qsTr("Show completed") : qsTr("Hide completed")
-            onTriggered: {
-                clist.hideCompleted = !clist.hideCompleted
-            }
+            onTriggered: clist.hideCompleted = !clist.hideCompleted
         }
     }
 

@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/main.qml</file>
-        <file>qtquickcontrols2.conf</file>
         <file>qml/pages/ListPage.qml</file>
         <file>qml/ekke/common/HorizontalListDivider.qml</file>
         <file>qml/ekke/common/HorizontalDivider.qml</file>

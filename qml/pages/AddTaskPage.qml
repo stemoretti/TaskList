@@ -6,9 +6,7 @@ import "../common"
 import "../popups"
 
 AppStackPage {
-    function resetFocus() {
-        nameField.focus = false
-    }
+    function resetFocus() { nameField.focus = false }
 
     title: qsTr("Add Task")
     padding: 6

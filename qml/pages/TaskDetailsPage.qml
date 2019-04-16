@@ -46,7 +46,6 @@ AppStackPage {
                     rightPadding: 10
                     text: qsTr("Name:")
                 }
-
                 Pane {
                     topPadding: 0
                     leftPadding: 10
@@ -68,7 +67,6 @@ AppStackPage {
                     rightPadding: 10
                     text: qsTr("Notes:")
                 }
-
                 Pane {
                     topPadding: 0
                     leftPadding: 10
@@ -117,6 +115,7 @@ AppStackPage {
                         }
                     }
                 }
+
                 LabelBody {
                     leftPadding: 10
                     rightPadding: 10

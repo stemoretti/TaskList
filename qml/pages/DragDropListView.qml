@@ -63,6 +63,7 @@ Item {
                         Layout.rightMargin: 10
                     }
                     LabelBody {
+                        visible: model.notes.length
                         text: model.notes.replace(/\n/g, ' ')
                         elide: Text.ElideRight
                         Layout.maximumWidth: 100

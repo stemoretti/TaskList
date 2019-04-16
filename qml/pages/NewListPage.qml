@@ -5,12 +5,9 @@ import "../ekke/common"
 import "../common"
 
 AppStackPage {
+    function resetFocus() { nameField.focus = false }
+
     title: qsTr("Add New List")
-
-    function resetFocus() {
-        nameField.focus = false
-    }
-
     padding: 6
 
     Flickable {
@@ -41,7 +38,6 @@ AppStackPage {
                         rightPadding: 10
                         anchors.fill: parent
                         placeholderText: qsTr("Tap here to insert name")
-//                        inputMethodHints: Qt.ImhUppercaseOnly
                         selectByMouse: true
                     }
                 }

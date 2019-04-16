@@ -56,24 +56,24 @@ Popup {
                         }
                     }
                 }
-                ColumnLayout {
-                    spacing: 0
-                    Layout.fillWidth: true
+//                RowLayout {
+//                    spacing: 0
+//                    Layout.fillWidth: true
+//                    LabelTitle {
+//                        text: locale.monthName(monthGrid.month)
+//                        elide: Text.ElideRight
+//                        color: textOnPrimary
+//                        horizontalAlignment: Qt.AlignHCenter
+//                        Layout.fillWidth: true
+//                    }
                     LabelTitle {
-                        text: currentLocale.monthName(monthGrid.month)
+                        text: currentLocale.monthName(monthGrid.month) + " " + monthGrid.year
                         elide: Text.ElideRight
                         color: textOnPrimary
                         horizontalAlignment: Qt.AlignHCenter
                         Layout.fillWidth: true
                     }
-                    LabelTitle {
-                        text: monthGrid.year
-                        elide: Text.ElideRight
-                        color: textOnPrimary
-                        horizontalAlignment: Qt.AlignHCenter
-                        Layout.fillWidth: true
-                    }
-                }
+//                }
                 ButtonFlat {
                     leftPadding: 12
                     rightPadding: 12

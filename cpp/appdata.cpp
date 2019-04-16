@@ -63,14 +63,6 @@ void AppData::readListFile()
     if (!readFile.exists()) {
         qWarning() << "List cache doesn't exist:" << m_listFilePath;
         return;
-//        qDebug() << "Creating list file from cache";
-//        QFile::copy(":/assets/list.json", m_listFilePath);
-//        QFile f(":/data-assets/lists.json");
-//        if (!f.copy(m_listFilePath)) {
-//            qDebug() << f.errorString();
-//            return;
-//        }
-//        readFile.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
     }
     if (!readFile.open(QIODevice::ReadOnly)) {
         qWarning() << "Cannot open file:" << m_listFilePath;

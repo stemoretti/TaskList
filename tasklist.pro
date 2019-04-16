@@ -93,7 +93,7 @@ android {
         android/AndroidManifest.xml \
         android/res/values/libs.xml \
         android/build.gradle \
-        android/src/com/github/stemoretti/tasklist/MainActivity.java
+        android/src/com/github/stemoretti/tasklist/MainActivity.java \
         android/src/com/github/stemoretti/tasklist/Alarm.java
 }
 

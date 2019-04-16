@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QQuickStyle>
 #include <QTranslator>
 #include <QScopedPointer>
 #include <QDebug>
@@ -15,6 +16,8 @@ int main(int argc, char *argv[])
     qputenv("QML_DISABLE_DISK_CACHE", "true");
 #endif
     QGuiApplication app(argc, argv);
+
+    QQuickStyle::setStyle("Material");
 
     QQmlApplicationEngine engine;
 
