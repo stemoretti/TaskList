@@ -13,6 +13,7 @@ class Settings : public QObject
     Q_PROPERTY(QColor primaryColor READ primaryColor WRITE setPrimaryColor NOTIFY primaryColorChanged)
     Q_PROPERTY(QColor accentColor READ accentColor WRITE setAccentColor NOTIFY accentColorChanged)
     Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
+    Q_PROPERTY(QString region READ region WRITE setRegion NOTIFY regionChanged)
 
 public:
     virtual ~Settings();
@@ -27,6 +28,7 @@ public:
     QColor primaryColor() const;
     QColor accentColor() const;
     QString language() const;
+    QString region() const;
 
     //}}} Properties getters declarations
 
@@ -37,6 +39,7 @@ signals:
     void primaryColorChanged(QColor primaryColor);
     void accentColorChanged(QColor accentColor);
     void languageChanged(QString language);
+    void regionChanged(const QString &region);
 
     //}}} Properties signals
 
@@ -49,6 +52,7 @@ public slots:
     void setPrimaryColor(const QColor &primaryColor);
     void setAccentColor(const QColor &accentColor);
     void setLanguage(const QString &language);
+    void setRegion(const QString &region);
 
     //}}} Properties setters declarations
 
@@ -64,6 +68,7 @@ private:
     QColor m_primaryColor;
     QColor m_accentColor;
     QString m_language;
+    QString m_region;
 
     //}}} Properties declarations
 };

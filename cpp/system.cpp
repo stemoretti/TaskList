@@ -16,3 +16,8 @@ QString System::systemLanguage()
 {
     return QLocale().name().left(2);
 }
+
+QString System::systemRegion()
+{
+    return QLocale().name();
+}

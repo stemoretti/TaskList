@@ -10,6 +10,7 @@ class System : public QObject
 public:
     static QString dataRoot();
     static QString systemLanguage();
+    static QString systemRegion();
 
 private:
     explicit System(QObject *parent = nullptr);

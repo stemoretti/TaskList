@@ -68,17 +68,45 @@ AppStackPage {
                     ComboBox {
                         width: parent.width
                         model: appTranslations
-                        currentIndex: appTranslations.indexOf(appSettings.language)
+//                        currentIndex: model.indexOf(appSettings.language)
 //                        displayText: Qt.locale(currentText).nativeLanguageName
                         displayText: JS.getLanguageFromCode(currentText)
-//                        popup.modal: true
-//                        popup.dim: true
+                        popup.modal: true
+                        popup.dim: true
                         delegate: ItemDelegate {
                             width: parent.width
                             implicitHeight: 40
 //                            text: Qt.locale(modelData).nativeLanguageName
                             text: JS.getLanguageFromCode(modelData)
                             onClicked: appSettings.language = modelData
+                        }
+                        Component.onCompleted: {
+                            currentIndex = model.indexOf(appSettings.language)
+                        }
+                    }
+                }
+
+                LabelBody {
+                    text: qsTr("Region:")
+                }
+                Pane {
+                    topPadding: 0
+                    Layout.fillWidth: true
+                    ComboBox {
+                        width: parent.width
+                        model: JS.regions.map(function (o) { return o.code })
+//                        currentIndex: model.indexOf(appSettings.region)
+                        displayText: JS.getRegionFromCode(currentText)
+                        popup.modal: true
+                        popup.dim: true
+                        delegate: ItemDelegate {
+                            width: parent.width
+                            implicitHeight: 40
+                            text: JS.getRegionFromCode(modelData)
+                            onClicked: appSettings.region = modelData
+                        }
+                        Component.onCompleted: {
+                            currentIndex = model.indexOf(appSettings.region)
                         }
                     }
                 }

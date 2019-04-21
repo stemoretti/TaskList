@@ -22,22 +22,22 @@
 <context>
     <name>AddTaskPage</name>
     <message>
-        <location filename="../qml/pages/AddTaskPage.qml" line="13"/>
+        <location filename="../qml/pages/AddTaskPage.qml" line="11"/>
         <source>Add Task</source>
         <translation>Aggiungi faccenda</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddTaskPage.qml" line="26"/>
+        <location filename="../qml/pages/AddTaskPage.qml" line="24"/>
         <source>Added %1 to list</source>
         <translation>%1 aggiunto alla lista</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddTaskPage.qml" line="29"/>
+        <location filename="../qml/pages/AddTaskPage.qml" line="27"/>
         <source>%1 is already in list</source>
         <translation>%1 è già nella lista</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddTaskPage.qml" line="32"/>
+        <location filename="../qml/pages/AddTaskPage.qml" line="31"/>
         <source>The name field is empty</source>
         <translation>La casella del nome è vuota</translation>
     </message>
@@ -55,12 +55,12 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../qml/common/App.qml" line="97"/>
+        <location filename="../qml/common/App.qml" line="95"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/App.qml" line="102"/>
+        <location filename="../qml/common/App.qml" line="100"/>
         <source>App</source>
         <translation type="unfinished"></translation>
     </message>
@@ -228,42 +228,42 @@
         <translation>Rimuovi faccenda</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="96"/>
+        <location filename="../qml/pages/ListPage.qml" line="88"/>
         <source>Add task</source>
         <translation>Aggiungi faccenda</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="106"/>
+        <location filename="../qml/pages/ListPage.qml" line="98"/>
         <source>Remove completed</source>
         <translation>Rimuovi completate</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="111"/>
+        <location filename="../qml/pages/ListPage.qml" line="103"/>
         <source>Remove all</source>
         <translation>Rimuovi tutte</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="116"/>
+        <location filename="../qml/pages/ListPage.qml" line="108"/>
         <source>Custom Order</source>
         <translation>Ordine personale</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="116"/>
+        <location filename="../qml/pages/ListPage.qml" line="108"/>
         <source>Sort By Due Date</source>
         <translation>Ordina per scadenza</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="124"/>
+        <location filename="../qml/pages/ListPage.qml" line="114"/>
         <source>Hide completed</source>
         <translation>Nascondi completate</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="124"/>
+        <location filename="../qml/pages/ListPage.qml" line="114"/>
         <source>Show completed</source>
         <translation>Mostra completate</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="133"/>
+        <location filename="../qml/pages/ListPage.qml" line="121"/>
         <source>Do you want to clear the selected tasks?
 
 </source>
@@ -272,26 +272,26 @@
 </translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="138"/>
+        <location filename="../qml/pages/ListPage.qml" line="126"/>
         <source>One completed task removed</source>
         <translation>Una faccenda completata rimossa</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="139"/>
+        <location filename="../qml/pages/ListPage.qml" line="127"/>
         <source>%1 completed tasks removed</source>
         <translation>%1 faccende completate rimosse</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="148"/>
+        <location filename="../qml/pages/ListPage.qml" line="136"/>
         <source>Do you want to clear the list?
 
 </source>
-        <translation>Vuoi rimuovere tutti gli articoli?
+        <translation>Vuoi rimuovere tutte le faccende?
 
 </translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="152"/>
+        <location filename="../qml/pages/ListPage.qml" line="140"/>
         <source>List cleared</source>
         <translation>Lista pulita</translation>
     </message>
@@ -299,32 +299,32 @@
 <context>
     <name>NewListPage</name>
     <message>
-        <location filename="../qml/pages/NewListPage.qml" line="52"/>
+        <location filename="../qml/pages/NewListPage.qml" line="48"/>
         <source>Add List</source>
         <translation>Aggiungi Lista</translation>
     </message>
     <message>
-        <location filename="../qml/pages/NewListPage.qml" line="8"/>
+        <location filename="../qml/pages/NewListPage.qml" line="10"/>
         <source>Add New List</source>
         <translation>Crea Nuova Lista</translation>
     </message>
     <message>
-        <location filename="../qml/pages/NewListPage.qml" line="58"/>
+        <location filename="../qml/pages/NewListPage.qml" line="54"/>
         <source>Created list %1</source>
         <translation>Creata Lista %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/NewListPage.qml" line="62"/>
+        <location filename="../qml/pages/NewListPage.qml" line="58"/>
         <source>List %1 exists</source>
         <translation>Lista %1 esiste già</translation>
     </message>
     <message>
-        <location filename="../qml/pages/NewListPage.qml" line="31"/>
+        <location filename="../qml/pages/NewListPage.qml" line="28"/>
         <source>Name:</source>
         <translation>Nome:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/NewListPage.qml" line="43"/>
+        <location filename="../qml/pages/NewListPage.qml" line="40"/>
         <source>Tap here to insert name</source>
         <translation>Tocca qui per inserire nome</translation>
     </message>
@@ -400,6 +400,11 @@ Do you want to exit and leave the App ?
         <source>Language:</source>
         <translation>Lingua:</translation>
     </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="90"/>
+        <source>Region:</source>
+        <translation>Nazione:</translation>
+    </message>
 </context>
 <context>
     <name>TaskDetailsPage</name>
@@ -414,72 +419,72 @@ Do you want to exit and leave the App ?
         <translation>Nome:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="60"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="59"/>
         <source>Tap here to insert name</source>
         <translation>Tocca qui per inserire nome</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="103"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="100"/>
         <source>Date:</source>
         <translation>Data:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="70"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="68"/>
         <source>Notes:</source>
         <translation>Note:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="97"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="94"/>
         <source>Due date</source>
         <translation>Scadenza</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="115"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="112"/>
         <source>Enter a date</source>
         <translation>Inserisci data</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="124"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="122"/>
         <source>Time:</source>
         <translation>Orario:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="137"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="135"/>
         <source>Enter time</source>
         <translation>Inserisci orario</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="147"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="145"/>
         <source>Completed:</source>
         <translation>Completata:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="162"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="158"/>
         <source>Not completed</source>
         <translation>Non completata</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="170"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="165"/>
         <source>Created:</source>
         <translation>Creata:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="191"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="183"/>
         <source>Modify</source>
         <translation>Modifica</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="195"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="187"/>
         <source>%1 modified</source>
         <translation>%1 modificato</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="199"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="191"/>
         <source>Item %1 exists</source>
         <translation>Faccenda %1 esiste già</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="202"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="194"/>
         <source>The name field is empty</source>
         <translation>La casella del nome è vuota</translation>
     </message>
@@ -510,22 +515,22 @@ Do you want to exit and leave the App ?
 <context>
     <name>main</name>
     <message>
-        <location filename="../qml/main.qml" line="99"/>
+        <location filename="../qml/main.qml" line="100"/>
         <source>New List</source>
         <translation>Aggiungi Lista</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="104"/>
+        <location filename="../qml/main.qml" line="105"/>
         <source>Edit Lists</source>
         <translation>Modifica Liste</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="109"/>
+        <location filename="../qml/main.qml" line="110"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="114"/>
+        <location filename="../qml/main.qml" line="115"/>
         <source>About</source>
         <translation>Informazioni App</translation>
     </message>
