@@ -19,7 +19,7 @@ AppStackPage {
 
     rightButtons: [
         Action {
-            icon.source: "qrc:icons/mic.svg"
+            icon.source: "image://icon/mic"
             onTriggered: appData.startSpeechRecognizer();
         }
     ]
@@ -109,7 +109,7 @@ AppStackPage {
                         property string date: dateString(task.dueDate)
                         leftPadding: 10
                         rightPadding: 10
-                        text: date.length ? date : qsTr("Enter a date")
+                        text: date.length ? date : qsTr("Enter date")
                         onClicked: {
                             datePicker.open()
                         }
@@ -188,7 +188,7 @@ AppStackPage {
                                 pop()
                                 console.log("modified: " + task.name)
                             } else {
-                                showError(qsTr("Item %1 exists").arg(nameField.text))
+                                showError(qsTr("Task %1 exists").arg(nameField.text))
                             }
                         } else {
                             showError(qsTr("The name field is empty"))

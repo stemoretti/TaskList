@@ -42,9 +42,6 @@ Item {
                         leftPadding: 24
                         checked: model.checked
                         onCheckStateChanged: {
-                            // CheckBox checked property will lose the binding
-                            // to the model property each time it's clicked so
-                            // the property value must be updated manually
                             model.checked = checked
                             dragDropDelegate.DelegateModel.inNotdone = !checked
                         }

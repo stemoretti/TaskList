@@ -31,7 +31,7 @@ Page {
 
     Action {
         id: backAction
-        icon.source: "qrc:icons/arrow_back.svg"
+        icon.source: "image://icon/arrow_back"
         onTriggered: page.pop()
     }
 

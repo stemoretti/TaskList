@@ -18,13 +18,13 @@ AppStackPage {
     title: clist ? clist.name : qsTr("No list")
 
     leftButton: Action {
-        icon.source: "qrc:icons/menu.svg"
+        icon.source: "image://icon/menu"
         onTriggered: navDrawer.open()
     }
 
     rightButtons: [
         Action {
-            icon.source: "qrc:icons/more_vert.svg"
+            icon.source: "image://icon/more_vert"
             onTriggered: optionsMenu.open()
         }
     ]
@@ -105,7 +105,7 @@ AppStackPage {
         }
         MenuItem {
             enabled: clist && clist.tasks.count
-            text: sortList ? qsTr("Custom Order") : qsTr("Sort By Due Date")
+            text: sortList ? qsTr("Custom order") : qsTr("Sort by due date")
             onTriggered: clist.sortByDueDate = !clist.sortByDueDate
         }
 

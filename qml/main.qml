@@ -31,17 +31,15 @@ App {
         width: Math.min(240,  Math.min(appWindow.width, appWindow.height) / 3 * 2 )
         height: appWindow.height
 
-        onAboutToShow: {
-            colums.enabled = true
-        }
+        onAboutToShow: menuColumn.enabled = true
 
         Flickable {
             anchors.fill: parent
-            contentHeight: colums.implicitHeight
+            contentHeight: menuColumn.implicitHeight
             boundsBehavior: Flickable.StopAtBounds
 
             ColumnLayout {
-                id: colums
+                id: menuColumn
 
                 anchors { left: parent.left; right: parent.right }
                 spacing: 0
@@ -95,22 +93,22 @@ App {
 
                     model: ListModel {
                         ListElement {
-                            iconUrl: "qrc:icons/add.svg"
+                            iconUrl: "image://icon/add"
                             text: qsTr("New List")
                             page: "pages/NewListPage.qml"
                         }
                         ListElement {
-                            iconUrl: "qrc:icons/edit.svg"
+                            iconUrl: "image://icon/edit"
                             text: qsTr("Edit Lists")
                             page: "pages/EditListsPage.qml"
                         }
                         ListElement {
-                            iconUrl: "qrc:icons/settings.svg"
+                            iconUrl: "image://icon/settings"
                             text: qsTr("Settings")
                             page: "pages/SettingsPage.qml"
                         }
                         ListElement {
-                            iconUrl: "qrc:icons/info.svg"
+                            iconUrl: "image://icon/info"
                             text: qsTr("About")
                             page: "pages/AboutPage.qml"
                         }
@@ -121,7 +119,7 @@ App {
                         text: model.text
                         Layout.fillWidth: true
                         onClicked: {
-                            colums.enabled = false
+                            menuColumn.enabled = false
                             navDrawer.close()
                             pageStack.push(Qt.resolvedUrl(model.page))
                         }

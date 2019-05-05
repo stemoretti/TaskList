@@ -13,11 +13,11 @@ AppStackPage {
 
     rightButtons: [
         Action {
-            icon.source: "qrc:icons/mic.svg"
+            icon.source: "image://icon/mic"
             onTriggered: appData.startSpeechRecognizer();
         },
         Action {
-            icon.source: "qrc:icons/add.svg"
+            icon.source: "image://icon/add"
             onTriggered: {
                 if (nameField.text.length > 0) {
                     if (appData.currentList.addTask(nameField.text)) {

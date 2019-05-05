@@ -14,9 +14,9 @@
         <translation>Questa app si basa sul software seguente:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="91"/>
-        <source>Some code taken from the following repositories.</source>
-        <translation>Parti di codice provengono dai seguenti siti.</translation>
+        <location filename="../qml/pages/AboutPage.qml" line="90"/>
+        <source>Some code taken from the following repositories</source>
+        <translation>Parti di codice provengono dai seguenti siti</translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../qml/pages/AddTaskPage.qml" line="11"/>
         <source>Add Task</source>
-        <translation>Aggiungi faccenda</translation>
+        <translation>Aggiungi attività</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddTaskPage.qml" line="24"/>
@@ -55,12 +55,12 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../qml/common/App.qml" line="95"/>
+        <location filename="../qml/common/App.qml" line="96"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/common/App.qml" line="100"/>
+        <location filename="../qml/common/App.qml" line="101"/>
         <source>App</source>
         <translation type="unfinished"></translation>
     </message>
@@ -210,12 +210,12 @@
     <message>
         <location filename="../qml/pages/ListPage.qml" line="47"/>
         <source>%1 completed tasks not shown</source>
-        <translation>%1 faccende completate nascoste</translation>
+        <translation>%1 attività completate nascoste</translation>
     </message>
     <message>
         <location filename="../qml/pages/ListPage.qml" line="49"/>
         <source>One completed task not shown</source>
-        <translation>Una faccenda completata nascosta</translation>
+        <translation>Una attività completata nascosta</translation>
     </message>
     <message>
         <location filename="../qml/pages/ListPage.qml" line="45"/>
@@ -225,12 +225,12 @@
     <message>
         <location filename="../qml/pages/ListPage.qml" line="69"/>
         <source>Delete task</source>
-        <translation>Rimuovi faccenda</translation>
+        <translation>Rimuovi attività</translation>
     </message>
     <message>
         <location filename="../qml/pages/ListPage.qml" line="88"/>
         <source>Add task</source>
-        <translation>Aggiungi faccenda</translation>
+        <translation>Aggiungi attività</translation>
     </message>
     <message>
         <location filename="../qml/pages/ListPage.qml" line="98"/>
@@ -244,12 +244,12 @@
     </message>
     <message>
         <location filename="../qml/pages/ListPage.qml" line="108"/>
-        <source>Custom Order</source>
+        <source>Custom order</source>
         <translation>Ordine personale</translation>
     </message>
     <message>
         <location filename="../qml/pages/ListPage.qml" line="108"/>
-        <source>Sort By Due Date</source>
+        <source>Sort by due date</source>
         <translation>Ordina per scadenza</translation>
     </message>
     <message>
@@ -267,33 +267,33 @@
         <source>Do you want to clear the selected tasks?
 
 </source>
-        <translation>Vuoi rimuovere le faccende completate?
+        <translation>Vuoi rimuovere le attività completate?
 
 </translation>
     </message>
     <message>
         <location filename="../qml/pages/ListPage.qml" line="126"/>
         <source>One completed task removed</source>
-        <translation>Una faccenda completata rimossa</translation>
+        <translation>Una attività completata rimossa</translation>
     </message>
     <message>
         <location filename="../qml/pages/ListPage.qml" line="127"/>
         <source>%1 completed tasks removed</source>
-        <translation>%1 faccende completate rimosse</translation>
+        <translation>%1 attività completate rimosse</translation>
     </message>
     <message>
         <location filename="../qml/pages/ListPage.qml" line="136"/>
         <source>Do you want to clear the list?
 
 </source>
-        <translation>Vuoi rimuovere tutte le faccende?
+        <translation>Vuoi rimuovere tutte le attività?
 
 </translation>
     </message>
     <message>
         <location filename="../qml/pages/ListPage.qml" line="140"/>
         <source>List cleared</source>
-        <translation>Lista pulita</translation>
+        <translation>Lista svuotata</translation>
     </message>
 </context>
 <context>
@@ -411,7 +411,7 @@ Do you want to exit and leave the App ?
     <message>
         <location filename="../qml/pages/TaskDetailsPage.qml" line="17"/>
         <source>Task Details</source>
-        <translation>Dettagli faccenda</translation>
+        <translation>Dettagli attività</translation>
     </message>
     <message>
         <location filename="../qml/pages/TaskDetailsPage.qml" line="47"/>
@@ -440,7 +440,7 @@ Do you want to exit and leave the App ?
     </message>
     <message>
         <location filename="../qml/pages/TaskDetailsPage.qml" line="112"/>
-        <source>Enter a date</source>
+        <source>Enter date</source>
         <translation>Inserisci data</translation>
     </message>
     <message>
@@ -480,8 +480,8 @@ Do you want to exit and leave the App ?
     </message>
     <message>
         <location filename="../qml/pages/TaskDetailsPage.qml" line="191"/>
-        <source>Item %1 exists</source>
-        <translation>Faccenda %1 esiste già</translation>
+        <source>Task %1 exists</source>
+        <translation>Attività %1 esiste già</translation>
     </message>
     <message>
         <location filename="../qml/pages/TaskDetailsPage.qml" line="194"/>
@@ -515,22 +515,22 @@ Do you want to exit and leave the App ?
 <context>
     <name>main</name>
     <message>
-        <location filename="../qml/main.qml" line="100"/>
+        <location filename="../qml/main.qml" line="97"/>
         <source>New List</source>
         <translation>Aggiungi Lista</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="105"/>
+        <location filename="../qml/main.qml" line="102"/>
         <source>Edit Lists</source>
         <translation>Modifica Liste</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="110"/>
+        <location filename="../qml/main.qml" line="107"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="115"/>
+        <location filename="../qml/main.qml" line="112"/>
         <source>About</source>
         <translation>Informazioni App</translation>
     </message>

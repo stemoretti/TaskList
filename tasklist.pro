@@ -13,6 +13,7 @@ HEADERS += \
     cpp/appdata.h \
     cpp/system.h \
     cpp/task.h \
+    cpp/iconprovider.h \
     cpp/sortfiltermodel.h
 
 SOURCES += \
@@ -22,6 +23,7 @@ SOURCES += \
     cpp/appdata.cpp \
     cpp/system.cpp \
     cpp/task.cpp \
+    cpp/iconprovider.cpp \
     cpp/sortfiltermodel.cpp
 
 OTHER_FILES += \
@@ -84,7 +86,7 @@ for(tsfile, TRANSLATIONS) {
 DEFINES += 'AVAILABLE_TRANSLATIONS=\\\"\'$$LANGUAGES\'\\\"'
 
 android {
-    QT += androidextras svg
+    QT += androidextras
 
     # Android package sources
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

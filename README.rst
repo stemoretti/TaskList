@@ -6,9 +6,10 @@ TaskList is a Qml/C++ based to do list application for Android.
 Screenshots
 -----------
 
-.. image:: screenshots/1.png
+.. |pic1| image:: screenshots/1.png
+.. |pic2| image:: screenshots/2.png
+.. |pic3| image:: screenshots/3.png
 
-.. image:: screenshots/2.png
+.. csv-table::
 
-.. image:: screenshots/3.png
-
+    |pic1|,|pic2|,|pic3|

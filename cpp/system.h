@@ -11,6 +11,7 @@ public:
     static QString dataRoot();
     static QString systemLanguage();
     static QString systemRegion();
+    static QStringList translations();
 
 private:
     explicit System(QObject *parent = nullptr);

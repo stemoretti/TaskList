@@ -4,10 +4,13 @@
 #include <QQuickStyle>
 #include <QTranslator>
 #include <QScopedPointer>
+#include <QFontDatabase>
 #include <QDebug>
 
 #include "appdata.h"
+#include "iconprovider.h"
 #include "settings.h"
+#include "system.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,14 +20,16 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
 
+    if (QFontDatabase::addApplicationFont(":/icons/MaterialIcons-Regular.ttf") == -1)
+        qWarning() << "Failed to load font Material";
+
     QQuickStyle::setStyle("Material");
 
     QQmlApplicationEngine engine;
 
-    QStringList translations({ "en" });
-    translations.append(QString(AVAILABLE_TRANSLATIONS).split(' '));
-    translations.sort();
-    qDebug() << "Available translations:" << translations;
+    engine.addImageProvider(QLatin1String("icon"), new IconProvider);
+
+    qDebug() << "Available translations:" << System::translations();
     QScopedPointer<QTranslator> translator;
     QCoreApplication::connect(&Settings::instance(), &Settings::languageChanged,
                               [&engine, &translator] (QString language) {
@@ -46,7 +51,7 @@ int main(int argc, char *argv[])
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("appData", &AppData::instance());
     context->setContextProperty("appSettings", &Settings::instance());
-    context->setContextProperty("appTranslations", translations);
+    context->setContextProperty("appTranslations", System::translations());
 
     engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));
 

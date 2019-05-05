@@ -1,13 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>icons/add.svg</file>
-        <file>icons/arrow_back.svg</file>
-        <file>icons/edit.svg</file>
-        <file>icons/error.svg</file>
-        <file>icons/info.svg</file>
-        <file>icons/menu.svg</file>
-        <file>icons/mic.svg</file>
-        <file>icons/more_vert.svg</file>
-        <file>icons/settings.svg</file>
+        <file>icons/MaterialIcons-Regular.ttf</file>
+        <file>icons/codepoints.json</file>
     </qresource>
 </RCC>

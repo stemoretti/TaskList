@@ -29,8 +29,8 @@ AppStackPage {
                     text: "<a href='http://github.com/stemoretti/tasklist'>"
                           + "github.com/stemoretti/tasklist</a>"
                     linkColor: isDarkTheme ? "lightblue" : "blue"
-                    Layout.alignment: Qt.AlignHCenter
                     onLinkActivated: Qt.openUrlExternally(link)
+                    Layout.alignment: Qt.AlignHCenter
                 }
 
                 HorizontalDivider { }
@@ -38,20 +38,17 @@ AppStackPage {
                 LabelSubheading {
                     text: qsTr("This app is based on the following software:")
                     wrapMode: Text.WordWrap
+                    horizontalAlignment: Qt.AlignHCenter
                     Layout.fillWidth: true
                 }
 
                 LabelBody {
-                    text: "Qt 5.12.2\n"
+                    text: "Qt 5.12.3\n"
                           + "Copyright 2008-2019 The Qt Company Ltd."
                           + " All rights reserved."
+                          + " Qt is under the LGPLv3 license."
                     wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
-                LabelBody {
-                    text: "Qt is under the LGPLv3 license."
-                    wrapMode: Text.WordWrap
+                    horizontalAlignment: Qt.AlignHCenter
                     Layout.fillWidth: true
                 }
 
@@ -62,9 +59,10 @@ AppStackPage {
                           + "title='Material Design'>Material Design</a>"
                           + " icons are under Apache license version 2.0"
                     wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
                     linkColor: isDarkTheme ? "lightblue" : "blue"
                     onLinkActivated: Qt.openUrlExternally(link)
+                    horizontalAlignment: Qt.AlignHCenter
+                    Layout.fillWidth: true
                 }
 
                 HorizontalDivider { }
@@ -82,14 +80,16 @@ AppStackPage {
                     wrapMode: Text.WordWrap
                     linkColor: isDarkTheme ? "lightblue" : "blue"
                     onLinkActivated: Qt.openUrlExternally(link)
+                    horizontalAlignment: Qt.AlignHCenter
                     Layout.fillWidth: true
                 }
 
                 HorizontalDivider { }
 
                 LabelSubheading {
-                    text: qsTr("Some code taken from the following repositories.")
+                    text: qsTr("Some code taken from the following repositories")
                     wrapMode: Text.WordWrap
+                    horizontalAlignment: Qt.AlignHCenter
                     Layout.fillWidth: true
                 }
 
