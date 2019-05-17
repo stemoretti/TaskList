@@ -27,7 +27,8 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    engine.addImageProvider(QLatin1String("icon"), new IconProvider);
+    engine.addImageProvider("icon",
+                            new IconProvider("Material Icons", ":/icons/codepoints.json"));
 
     qDebug() << "Available translations:" << System::translations();
     QScopedPointer<QTranslator> translator;

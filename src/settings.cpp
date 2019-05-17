@@ -16,7 +16,7 @@ Settings::Settings(QObject *parent)
     , m_language("en")
     , m_region("en_US")
 {
-    m_settingsFilePath = System::dataRoot() + "/settings.json";
+    m_settingsFilePath = System::dataPath() + "/settings.json";
 }
 
 Settings::~Settings()
@@ -40,10 +40,9 @@ void Settings::readSettingsFile()
     if (!readFile.exists()) {
         qWarning() << "Cannot find the settings file:" << m_settingsFilePath;
         qDebug() << "Using default settings values";
-        setRegion(System::systemRegion());
-        if (QString(AVAILABLE_TRANSLATIONS)
-            .split(' ').contains(System::systemLanguage()))
-            setLanguage(System::systemLanguage());
+        setRegion(System::region());
+        if (System::translations().contains(System::language()))
+            setLanguage(System::language());
         return;
     }
     if (!readFile.open(QIODevice::ReadOnly)) {

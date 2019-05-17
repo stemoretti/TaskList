@@ -7,24 +7,26 @@ QT += qml quick quickcontrols2
 CONFIG += c++11
 
 HEADERS += \
-    cpp/QQmlObjectListModel.h \
-    cpp/settings.h \
-    cpp/list.h \
-    cpp/appdata.h \
-    cpp/system.h \
-    cpp/task.h \
-    cpp/iconprovider.h \
-    cpp/sortfiltermodel.h
+    src/QQmlObjectListModel.h \
+    src/settings.h \
+    src/list.h \
+    src/appdata.h \
+    src/system.h \
+    src/task.h \
+    src/iconprovider.h \
+    src/sortfiltermodel.h \
+    src/uniqueid.h
 
 SOURCES += \
-    cpp/main.cpp \
-    cpp/settings.cpp \
-    cpp/list.cpp \
-    cpp/appdata.cpp \
-    cpp/system.cpp \
-    cpp/task.cpp \
-    cpp/iconprovider.cpp \
-    cpp/sortfiltermodel.cpp
+    src/main.cpp \
+    src/settings.cpp \
+    src/list.cpp \
+    src/appdata.cpp \
+    src/system.cpp \
+    src/task.cpp \
+    src/iconprovider.cpp \
+    src/sortfiltermodel.cpp \
+    src/uniqueid.cpp
 
 OTHER_FILES += \
     LICENSE

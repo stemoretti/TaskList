@@ -13,11 +13,6 @@
         <source>This app is based on the following software:</source>
         <translation>Questa app si basa sul software seguente:</translation>
     </message>
-    <message>
-        <location filename="../qml/pages/AboutPage.qml" line="90"/>
-        <source>Some code taken from the following repositories</source>
-        <translation>Parti di codice provengono dai seguenti siti</translation>
-    </message>
 </context>
 <context>
     <name>AddTaskPage</name>

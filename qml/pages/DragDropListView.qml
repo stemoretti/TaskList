@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.3
 import QtQml.Models 2.12
+import QtGraphicalEffects 1.0
 import "../ekke/common"
 import "../common"
 import "../popups"
@@ -70,11 +71,25 @@ Item {
                         id: dragPointRect
 
                         width: 40
-                        color: isDarkTheme ? "gray" : "lightgray"
-                        radius: 2
+                        color: "transparent"
                         Layout.margins: 4
                         Layout.rightMargin: 10
                         Layout.fillHeight: true
+
+                        Image {
+                            id: grabImage
+
+                            height: 30
+                            width: 30
+                            anchors.centerIn: parent
+                            source: "image://icon/reorder"
+                        }
+
+                        ColorOverlay {
+                            anchors.fill: grabImage
+                            source: grabImage
+                            color: isDarkTheme ? "gray" : "lightgray"
+                        }
                     }
                 }
             }

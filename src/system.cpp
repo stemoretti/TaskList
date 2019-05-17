@@ -3,21 +3,17 @@
 #include <QStandardPaths>
 #include <QLocale>
 
-System::System(QObject *parent) : QObject(parent)
-{
-}
-
-QString System::dataRoot()
+QString System::dataPath()
 {
     return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 }
 
-QString System::systemLanguage()
+QString System::language()
 {
     return QLocale().name().left(2);
 }
 
-QString System::systemRegion()
+QString System::region()
 {
     return QLocale().name();
 }
