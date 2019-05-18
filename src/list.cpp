@@ -2,6 +2,7 @@
 
 #include <QJsonArray>
 #include "task.h"
+#include "uniqueid.h"
 
 List::List(const QString &name, QObject *parent)
     : QObject(parent)
@@ -66,19 +67,19 @@ void List::addTask(Task *task)
     m_tasks->append(task);
 }
 
-bool List::addTask(const QString &name)
+bool List::newTask(const QString &name)
 {
     if (findTask(name))
         return false;
-    addTask(new Task(name));
+    addTask(new Task(name, UniqueID::newUID()));
 
     return true;
 }
 
 bool List::moveTask(int from, int to) const
 {
-    if (from >= 0 && from < m_tasks->count()
-        && to >= 0 && to < m_tasks->count()) {
+    if (from >= 0 && from < m_tasks->count() &&
+        to >= 0 && to < m_tasks->count()) {
         m_tasks->move(from, to);
         return true;
     }
@@ -114,9 +115,8 @@ void List::removeTask(const QString &name) const
 bool List::modifyTask(QObject *obj, const QString &name) const
 {
     auto task = static_cast<Task*>(obj);
-    if (findTask(name) && findTask(name) != task) {
+    if (findTask(name) && findTask(name) != task)
         return false;
-    }
     task->setName(name);
     return true;
 }

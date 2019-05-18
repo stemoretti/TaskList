@@ -33,13 +33,10 @@ public:
     void startSpeechRecognizer() const;
 
     Q_INVOKABLE
-    void sendNotification(const QString &s) const;
+    void setAlarm(int id, long long time, const QString &task) const;
 
     Q_INVOKABLE
-    void setAlarm() const;
-
-    Q_INVOKABLE
-    void cancelAlarm() const;
+    void cancelAlarm(int id) const;
 #endif
 
     //{{{ Properties getters declarations

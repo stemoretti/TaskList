@@ -9,6 +9,7 @@ class Task : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(int id READ id NOTIFY idChanged)
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(bool checked READ checked WRITE setChecked NOTIFY checkedChanged)
     Q_PROPERTY(QDateTime created READ created NOTIFY createdChanged)
@@ -18,13 +19,14 @@ class Task : public QObject
     Q_PROPERTY(QDateTime completed READ completed WRITE setCompleted NOTIFY completedChanged)
 
 public:
-    explicit Task(const QString &name = QString(), QObject *parent = nullptr);
+    explicit Task(const QString &name = QString(), int id = 0, QObject *parent = nullptr);
 
     static Task *fromJson(const QJsonObject &json);
     QJsonObject toJson() const;
 
     //{{{ Properties getters declarations
 
+    int id() const;
     QString name() const;
     bool checked() const;
     QDateTime created() const;
@@ -38,6 +40,7 @@ public:
 signals:
     //{{{ Properties signals
 
+    void idChanged(int id);
     void nameChanged(QString name);
     void checkedChanged(bool checked);
     void createdChanged(QDateTime created);
@@ -51,6 +54,7 @@ signals:
 public slots:
     //{{{ Properties setters declarations
 
+    void setId(int id);
     void setName(const QString &name);
     void setChecked(bool checked);
     void setCreated(const QDateTime &created);
@@ -64,6 +68,7 @@ public slots:
 private:
     //{{{ Properties declarations
 
+    int m_id;
     QString m_name;
     bool m_checked;
     QDateTime m_created;

@@ -52,7 +52,7 @@ signals:
     //}}} Properties signals
 
 public slots:
-    bool addTask(const QString &name);
+    bool newTask(const QString &name);
     void removeChecked() const;
     void removeAll() const;
     void removeTask(const QString &name) const;

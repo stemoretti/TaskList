@@ -11,6 +11,7 @@
 #endif
 
 #include "system.h"
+#include "uniqueid.h"
 
 AppData::AppData(QObject *parent)
     : QObject(parent)
@@ -18,7 +19,7 @@ AppData::AppData(QObject *parent)
 {
     m_lists = new QQmlObjectListModel<List>(this);
 
-    m_listFilePath = System::dataRoot() + "/lists.json";
+    m_listFilePath = System::dataPath() + "/lists.json";
     qDebug() << m_listFilePath;
 
     if (!checkDirs())
@@ -41,7 +42,7 @@ AppData &AppData::instance()
 bool AppData::checkDirs() const
 {
     QDir myDir;
-    auto path = System::dataRoot();
+    auto path = System::dataPath();
 
     if (!myDir.exists(path)) {
         if (!myDir.mkpath(path)) {
@@ -80,6 +81,7 @@ void AppData::readListFile()
     auto curList = jobj["current"];
     if (!curList.isNull() && !curList.toString().isEmpty())
         selectList(curList.toString());
+    UniqueID::setLastUID(jobj["lastUID"].toInt());
 
     qDebug() << m_lists->count() << "lists loaded";
     qDebug() << "List database read";
@@ -101,6 +103,7 @@ void AppData::writeListFile() const
         jarrLists.append(i->toJson());
     jobj["lists"] = jarrLists;
     jobj["current"] = currentList() ? currentList()->name() : "";
+    jobj["lastUID"] = UniqueID::lastUID();
     writeFile.write(QJsonDocument(jobj).toJson());
     writeFile.close();
 
@@ -109,9 +112,9 @@ void AppData::writeListFile() const
 
 List *AppData::findList(const QString &name) const
 {
-    for (const auto &l : m_lists->toList()) {
-        if (l->name() == name)
-            return l;
+    for (const auto &list : m_lists->toList()) {
+        if (list->name() == name)
+            return list;
     }
     return nullptr;
 }
@@ -136,8 +139,8 @@ void AppData::removeList(const QString &name)
 {
     auto list = findList(name);
     if (list) {
-        auto idx = m_lists->indexOf(list);
-        removeList(idx);
+        auto index = m_lists->indexOf(list);
+        removeList(index);
     }
 }
 
@@ -172,21 +175,17 @@ void AppData::startSpeechRecognizer() const
     QtAndroid::androidActivity().callMethod<void>("getSpeechInput", "()V");
 }
 
-void AppData::sendNotification(const QString &s) const
+void AppData::setAlarm(int id, long long time, const QString &task) const
 {
-    auto javaNotification = QAndroidJniObject::fromString(s);
-    QtAndroid::androidActivity().callMethod<void>("notify", "(Ljava/lang/String;)V",
-                                                  javaNotification.object<jstring>());
+    auto javaString = QAndroidJniObject::fromString(task);
+    QtAndroid::androidActivity().callMethod<void>("setAlarm",
+                                                  "(IJLjava/lang/String;)V",
+                                                  id, time, javaString.object());
 }
 
-void AppData::setAlarm() const
+void AppData::cancelAlarm(int id) const
 {
-    QtAndroid::androidActivity().callMethod<void>("setAlarm", "()V");
-}
-
-void AppData::cancelAlarm() const
-{
-    QtAndroid::androidActivity().callMethod<void>("cancelAlarm", "()V");
+    QtAndroid::androidActivity().callMethod<void>("cancelAlarm", "(I)V", id);
 }
 #endif
 

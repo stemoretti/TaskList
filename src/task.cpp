@@ -1,14 +1,15 @@
 #include "task.h"
 
-Task::Task(const QString &name, QObject *parent)
+Task::Task(const QString &name, int id, QObject *parent)
     : QObject(parent)
+    , m_id(id)
     , m_name(name)
     , m_checked(false)
     , m_created(QDateTime::currentDateTime())
 {
     connect(this, &Task::checkedChanged,
             this, [=] (bool checked) {
-        if (checked && completed().isNull())
+        if (checked)
             setCompleted(QDateTime::currentDateTime());
         else
             setCompleted(QDateTime());
@@ -18,6 +19,7 @@ Task::Task(const QString &name, QObject *parent)
 Task *Task::fromJson(const QJsonObject &json)
 {
     auto c = new Task;
+    c->setId(json["id"].toInt());
     c->setName(json["name"].toString());
     c->setChecked(json["checked"].toBool());
     c->setCreated(QDateTime::fromString(json["created"].toString(), Qt::ISODate));
@@ -31,6 +33,7 @@ Task *Task::fromJson(const QJsonObject &json)
 QJsonObject Task::toJson() const
 {
     QJsonObject json;
+    json["id"] = id();
     json["name"] = name();
     json["checked"] = checked();
     json["created"] = created().toString(Qt::ISODate);
@@ -42,6 +45,20 @@ QJsonObject Task::toJson() const
 }
 
 //{{{ Properties getters/setters definitions
+
+int Task::id() const
+{
+    return m_id;
+}
+
+void Task::setId(int id)
+{
+    if (m_id == id)
+        return;
+
+    m_id = id;
+    emit idChanged(m_id);
+}
 
 QString Task::name() const
 {

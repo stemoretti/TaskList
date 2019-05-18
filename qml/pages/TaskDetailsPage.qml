@@ -202,9 +202,9 @@ AppStackPage {
     DatePicker {
         id: datePicker
         onClosed: {
-            if (isOK)
+            if (isOK) {
                 task.dueDate = datePicker.selectedDate
-            else if (clear) {
+            } else if (clear) {
                 task.dueDate = ""
                 task.dueTime = ""
             }
@@ -214,12 +214,14 @@ AppStackPage {
         id: timePicker
         onClosed: {
             if (isOK) {
-                var date = new Date()
+                var date = new Date(task.dueDate.toString())
                 date.setHours(timePicker.hrsDisplay)
                 date.setMinutes(timePicker.minutesDisplay)
                 task.dueTime = date
+                appData.setAlarm(task.id, date.getTime(), task.name)
             } else if (clear) {
                 task.dueTime = ""
+                appData.cancelAlarm(task.id)
             }
         }
     }

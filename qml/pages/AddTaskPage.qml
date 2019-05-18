@@ -20,7 +20,7 @@ AppStackPage {
             icon.source: "image://icon/add"
             onTriggered: {
                 if (nameField.text.length > 0) {
-                    if (appData.currentList.addTask(nameField.text)) {
+                    if (appData.currentList.newTask(nameField.text)) {
                         showToast(qsTr("Added %1 to list").arg(nameField.text))
                         nameField.text = ""
                     } else {
