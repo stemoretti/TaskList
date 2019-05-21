@@ -25,7 +25,10 @@
         <file>qml/pages/EditListsPage.qml</file>
         <file>qml/pages/AboutPage.qml</file>
         <file>qml/common/DragDropListDelegate.qml</file>
+        <file>qml/common/SettingsItem.qml</file>
+        <file>qml/popups/ColorSelectionPopup.qml</file>
         <file>qml/popups/DatePicker.qml</file>
+        <file>qml/popups/LocalizationPopup.qml</file>
         <file>qml/popups/TimePicker.qml</file>
         <file>qml/pages/TaskDetailsPage.qml</file>
         <file>qml/pages/DragDropListView.qml</file>

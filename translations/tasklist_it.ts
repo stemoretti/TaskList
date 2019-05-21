@@ -159,6 +159,104 @@
     </message>
 </context>
 <context>
+    <name>ColorSelectionPopup</name>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="61"/>
+        <source>Material Red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="62"/>
+        <source>Material Pink</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="63"/>
+        <source>Material Purple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="64"/>
+        <source>Material DeepPurple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="65"/>
+        <source>Material Indigo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="66"/>
+        <source>Material Blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="67"/>
+        <source>Material LightBlue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="68"/>
+        <source>Material Cyan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="69"/>
+        <source>Material Teal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="70"/>
+        <source>Material Green</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="71"/>
+        <source>Material LightGreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="72"/>
+        <source>Material Lime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="73"/>
+        <source>Material Yellow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="74"/>
+        <source>Material Amber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="75"/>
+        <source>Material Orange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="76"/>
+        <source>Material DeepOrange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="77"/>
+        <source>Material Brown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="78"/>
+        <source>Material Grey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/ColorSelectionPopup.qml" line="79"/>
+        <source>Material BlueGrey</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DatePicker</name>
     <message>
         <location filename="../qml/popups/DatePicker.qml" line="165"/>
@@ -361,44 +459,44 @@ Do you want to exit and leave the App ?
 <context>
     <name>SettingsPage</name>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="9"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="10"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="25"/>
-        <source>Theme:</source>
-        <translation>Tema:</translation>
+        <location filename="../qml/pages/SettingsPage.qml" line="30"/>
+        <source>Dark theme is enabled</source>
+        <translation>Tema scuro abilitato</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="31"/>
+        <source>Dark theme is disabled</source>
+        <translation>Tema scuro disabilitato</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="39"/>
+        <source>Primary Color</source>
+        <translation>Colore Primario</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="45"/>
+        <source>Accent Color</source>
+        <translation>Colore Secondario</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="53"/>
+        <source>Language</source>
+        <translation>Lingua</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="59"/>
+        <source>Region</source>
+        <translation>Nazione</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="28"/>
         <source>Dark Theme</source>
         <translation>Tema Scuro</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="31"/>
-        <source>Light Theme</source>
-        <translation>Tema Chiaro</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="37"/>
-        <source>Primary Color:</source>
-        <translation>Colore Primario:</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="48"/>
-        <source>Accent Color:</source>
-        <translation>Colore Secondario:</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="63"/>
-        <source>Language:</source>
-        <translation>Lingua:</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="90"/>
-        <source>Region:</source>
-        <translation>Nazione:</translation>
     </message>
 </context>
 <context>
