@@ -10,10 +10,6 @@ import "../popups"
 AppStackPage {
     property var task
 
-    function resetFocus() {
-        nameField.focus = false
-    }
-
     title: qsTr("Task Details")
     padding: 6
 
