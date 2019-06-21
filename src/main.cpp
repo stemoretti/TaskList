@@ -56,5 +56,13 @@ int main(int argc, char *argv[])
 
     engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));
 
+    QObject::connect(&app, &QGuiApplication::applicationStateChanged,
+                     [=] (Qt::ApplicationState state) {
+        if (state == Qt::ApplicationSuspended) {
+            AppData::instance().writeListFile();
+            Settings::instance().writeSettingsFile();
+        }
+    });
+
     return app.exec();
 }

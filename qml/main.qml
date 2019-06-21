@@ -130,17 +130,4 @@ App {
             }
         }
     }
-
-    Connections {
-        target: Qt.application
-        onStateChanged: {
-//            if (Qt.application.state === Qt.ApplicationActive) {
-//                ;
-//            } else {
-            if (Qt.application.state === Qt.ApplicationSuspended) {
-                appData.writeListFile()
-                appSettings.writeSettingsFile()
-            }
-        }
-    }
 }
