@@ -56,9 +56,12 @@ AppStackPage {
                 }
 
                 SettingsItem {
-                    title: qsTr("Region")
-                    subtitle: JS.getRegionFromCode(appSettings.region)
-                    onClicked: regionPopup.open()
+                    property string name: JS.getCountryFromCode(appSettings.country)
+                    property string nativeName: JS.getCountryFromCode(appSettings.country, "native")
+
+                    title: qsTr("Country")
+                    subtitle: nativeName + ((name !== nativeName) ? " (" + name + ")" : "")
+                    onClicked: push(Qt.resolvedUrl("SettingsContinentsPage.qml"))
                 }
             }
         }
@@ -86,21 +89,6 @@ AppStackPage {
         }
         Component.onCompleted: {
             currentIndex = model.indexOf(appSettings.language)
-        }
-    }
-
-    LocalizationPopup {
-        id: regionPopup
-
-        model: JS.regions.map(function (o) { return o.code })
-        delegateFunction: JS.getRegionFromCode
-        onClicked: {
-            appSettings.region = data
-            currentIndex = index
-            close()
-        }
-        Component.onCompleted: {
-            currentIndex = model.indexOf(appSettings.region)
         }
     }
 }

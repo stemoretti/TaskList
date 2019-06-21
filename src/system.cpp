@@ -13,7 +13,7 @@ QString System::language()
     return QLocale().name().left(2);
 }
 
-QString System::region()
+QString System::locale()
 {
     return QLocale().name();
 }

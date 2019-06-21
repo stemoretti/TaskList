@@ -8,7 +8,7 @@ class System
 public:
     static QString dataPath();
     static QString language();
-    static QString region();
+    static QString locale();
     static QStringList translations();
 
 private:

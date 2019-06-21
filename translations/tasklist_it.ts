@@ -54,11 +54,6 @@
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../qml/common/App.qml" line="101"/>
-        <source>App</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ColorComboBox</name>
@@ -277,17 +272,17 @@
 <context>
     <name>EditListsPage</name>
     <message>
-        <location filename="../qml/pages/EditListsPage.qml" line="11"/>
+        <location filename="../qml/pages/EditListsPage.qml" line="12"/>
         <source>Edit Lists</source>
         <translation>Modifica Liste</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EditListsPage.qml" line="91"/>
+        <location filename="../qml/pages/EditListsPage.qml" line="106"/>
         <source>No Lists</source>
         <translation>Nessuna Lista</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EditListsPage.qml" line="108"/>
+        <location filename="../qml/pages/EditListsPage.qml" line="123"/>
         <source>Delete list</source>
         <translation>Rimuovi lista</translation>
     </message>
@@ -457,6 +452,22 @@ Do you want to exit and leave the App ?
     </message>
 </context>
 <context>
+    <name>SettingsContinentsPage</name>
+    <message>
+        <location filename="../qml/pages/SettingsContinentsPage.qml" line="9"/>
+        <source>Continents</source>
+        <translation>Continenti</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsCountriesPage</name>
+    <message>
+        <location filename="../qml/pages/SettingsCountriesPage.qml" line="11"/>
+        <source>Countries</source>
+        <translation>Nazioni</translation>
+    </message>
+</context>
+<context>
     <name>SettingsPage</name>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="10"/>
@@ -489,8 +500,8 @@ Do you want to exit and leave the App ?
         <translation>Lingua</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="59"/>
-        <source>Region</source>
+        <location filename="../qml/pages/SettingsPage.qml" line="62"/>
+        <source>Country</source>
         <translation>Nazione</translation>
     </message>
     <message>
@@ -502,82 +513,82 @@ Do you want to exit and leave the App ?
 <context>
     <name>TaskDetailsPage</name>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="17"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="13"/>
         <source>Task Details</source>
         <translation>Dettagli attività</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="47"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="43"/>
         <source>Name:</source>
         <translation>Nome:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="59"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="55"/>
         <source>Tap here to insert name</source>
         <translation>Tocca qui per inserire nome</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="100"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="96"/>
         <source>Date:</source>
         <translation>Data:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="68"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="64"/>
         <source>Notes:</source>
         <translation>Note:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="94"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="90"/>
         <source>Due date</source>
         <translation>Scadenza</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="112"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="108"/>
         <source>Enter date</source>
         <translation>Inserisci data</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="122"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="118"/>
         <source>Time:</source>
         <translation>Orario:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="135"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="131"/>
         <source>Enter time</source>
         <translation>Inserisci orario</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="145"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="141"/>
         <source>Completed:</source>
         <translation>Completata:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="158"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="154"/>
         <source>Not completed</source>
         <translation>Non completata</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="165"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="161"/>
         <source>Created:</source>
         <translation>Creata:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="183"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="179"/>
         <source>Modify</source>
         <translation>Modifica</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="187"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="183"/>
         <source>%1 modified</source>
         <translation>%1 modificato</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="191"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="187"/>
         <source>Task %1 exists</source>
         <translation>Attività %1 esiste già</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="194"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="190"/>
         <source>The name field is empty</source>
         <translation>La casella del nome è vuota</translation>
     </message>
@@ -608,22 +619,22 @@ Do you want to exit and leave the App ?
 <context>
     <name>main</name>
     <message>
-        <location filename="../qml/main.qml" line="97"/>
+        <location filename="../qml/main.qml" line="99"/>
         <source>New List</source>
         <translation>Aggiungi Lista</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="102"/>
+        <location filename="../qml/main.qml" line="104"/>
         <source>Edit Lists</source>
         <translation>Modifica Liste</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="107"/>
+        <location filename="../qml/main.qml" line="109"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="112"/>
+        <location filename="../qml/main.qml" line="114"/>
         <source>About</source>
         <translation>Informazioni App</translation>
     </message>

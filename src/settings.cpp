@@ -14,7 +14,7 @@ Settings::Settings(QObject *parent)
     , m_primaryColor("#607D8B") // Material.BlueGrey
     , m_accentColor("#FF9800") // Material.Orange
     , m_language("en")
-    , m_region("en_US")
+    , m_country("en_US")
 {
     m_settingsFilePath = System::dataPath() + "/settings.json";
 }
@@ -40,7 +40,7 @@ void Settings::readSettingsFile()
     if (!readFile.exists()) {
         qWarning() << "Cannot find the settings file:" << m_settingsFilePath;
         qDebug() << "Using default settings values";
-        setRegion(System::region());
+        setCountry(System::locale());
         if (System::translations().contains(System::language()))
             setLanguage(System::language());
         return;
@@ -60,7 +60,7 @@ void Settings::readSettingsFile()
     setPrimaryColor(jobj["primaryColor"].toString());
     setAccentColor(jobj["accentColor"].toString());
     setLanguage(jobj["language"].toString());
-    setRegion(jobj["region"].toString());
+    setCountry(jobj["country"].toString());
 
     qDebug() << "Settings file read";
 }
@@ -80,7 +80,7 @@ void Settings::writeSettingsFile() const
     jobj["primaryColor"] = m_primaryColor.name(QColor::HexRgb);
     jobj["accentColor"] = m_accentColor.name(QColor::HexRgb);
     jobj["language"] = m_language;
-    jobj["region"] = m_region;
+    jobj["country"] = m_country;
     writeFile.write(QJsonDocument(jobj).toJson());
     writeFile.close();
 
@@ -145,18 +145,18 @@ void Settings::setLanguage(const QString &language)
     emit languageChanged(m_language);
 }
 
-QString Settings::region() const
+QString Settings::country() const
 {
-    return m_region;
+    return m_country;
 }
 
-void Settings::setRegion(const QString &region)
+void Settings::setCountry(const QString &country)
 {
-    if (m_region == region)
+    if (m_country == country)
         return;
 
-    m_region = region;
-    emit regionChanged(m_region);
+    m_country = country;
+    emit countryChanged(m_country);
 }
 
 //}}} Properties getters/setters definitions

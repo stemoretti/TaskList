@@ -53,7 +53,7 @@ ApplicationWindow {
     property real opacityBodyAndButton: primaryTextOpacity
     property real opacityBodySecondary: secondaryTextOpacity
     property real opacityCaption: secondaryTextOpacity
-    property var currentLocale: Qt.locale(appSettings.region)
+    property var currentLocale: Qt.locale(appSettings.country)
 
     function isDarkColor(color) {
         var a = 1.0 - (0.299 * color.r + 0.587 * color.g + 0.114 * color.b)

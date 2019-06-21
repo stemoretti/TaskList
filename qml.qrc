@@ -34,5 +34,7 @@
         <file>qml/pages/DragDropListView.qml</file>
         <file>qml/pages/SortedListView.qml</file>
         <file>qml/pages/AddTaskPage.qml</file>
+        <file>qml/pages/SettingsContinentsPage.qml</file>
+        <file>qml/pages/SettingsCountriesPage.qml</file>
     </qresource>
 </RCC>
