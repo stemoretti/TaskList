@@ -14,12 +14,15 @@ class Task : public QObject
     Q_PROPERTY(bool checked READ checked WRITE setChecked NOTIFY checkedChanged)
     Q_PROPERTY(QDateTime created READ created NOTIFY createdChanged)
     Q_PROPERTY(QString notes READ notes WRITE setNotes NOTIFY notesChanged)
-    Q_PROPERTY(QDate dueDate READ dueDate WRITE setDueDate NOTIFY dueDateChanged)
-    Q_PROPERTY(QTime dueTime READ dueTime WRITE setDueTime NOTIFY dueTimeChanged)
+    Q_PROPERTY(QDateTime due READ due WRITE setDue NOTIFY dueChanged)
+    Q_PROPERTY(AlarmMode alarm READ alarm WRITE setAlarm NOTIFY alarmChanged)
     Q_PROPERTY(QDateTime completed READ completed WRITE setCompleted NOTIFY completedChanged)
 
 public:
     explicit Task(const QString &name = QString(), int id = 0, QObject *parent = nullptr);
+
+    enum AlarmMode { NoAlarm, Notification, Alarm };
+    Q_ENUM(AlarmMode)
 
     static Task *fromJson(const QJsonObject &json);
     QJsonObject toJson() const;
@@ -31,8 +34,8 @@ public:
     bool checked() const;
     QDateTime created() const;
     QString notes() const;
-    QDate dueDate() const;
-    QTime dueTime() const;
+    QDateTime due() const;
+    AlarmMode alarm() const;
     QDateTime completed() const;
 
     //}}} Properties getters declarations
@@ -45,8 +48,8 @@ signals:
     void checkedChanged(bool checked);
     void createdChanged(QDateTime created);
     void notesChanged(const QString &notes);
-    void dueDateChanged(const QDate &dueDate);
-    void dueTimeChanged(const QTime &dueTime);
+    void dueChanged(const QDateTime &due);
+    void alarmChanged(AlarmMode alarm);
     void completedChanged(const QDateTime &completed);
 
     //}}} Properties signals
@@ -59,8 +62,8 @@ public slots:
     void setChecked(bool checked);
     void setCreated(const QDateTime &created);
     void setNotes(const QString &notes);
-    void setDueDate(const QDate &dueDate);
-    void setDueTime(const QTime &dueTime);
+    void setDue(const QDateTime &due);
+    void setAlarm(AlarmMode alarm);
     void setCompleted(const QDateTime &completed);
 
     //}}} Properties setters declarations
@@ -73,8 +76,8 @@ private:
     bool m_checked;
     QDateTime m_created;
     QString m_notes;
-    QDate m_dueDate;
-    QTime m_dueTime;
+    QDateTime m_due;
+    AlarmMode m_alarm;
     QDateTime m_completed;
 
     //}}} Properties declarations

@@ -28,7 +28,7 @@ bool SortFilterModel::lessThan(const QModelIndex &source_left,
     auto m = static_cast<QQmlObjectListModel<Task>*>(sourceModel());
     auto left = m->at(source_left.row());
     auto right = m->at(source_right.row());
-    return left->dueDate() < right->dueDate();
+    return left->due() < right->due();
 }
 
 bool SortFilterModel::hideCompleted() const

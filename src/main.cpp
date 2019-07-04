@@ -11,6 +11,7 @@
 #include "iconprovider.h"
 #include "settings.h"
 #include "system.h"
+#include "task.h"
 
 int main(int argc, char *argv[])
 {
@@ -53,6 +54,8 @@ int main(int argc, char *argv[])
     context->setContextProperty("appData", &AppData::instance());
     context->setContextProperty("appSettings", &Settings::instance());
     context->setContextProperty("appTranslations", System::translations());
+
+    qmlRegisterUncreatableType<Task>("Task", 1, 0, "Task", "test");
 
     engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));
 

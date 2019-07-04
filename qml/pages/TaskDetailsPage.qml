@@ -1,7 +1,9 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.5
+import QtQuick.Controls.Material 2.3
 import QtQml 2.12
+import Task 1.0
 import "../ekke/common"
 import "../ekke/popups"
 import "../common"
@@ -13,16 +15,9 @@ AppStackPage {
     title: qsTr("Task Details")
     padding: 6
 
-    rightButtons: [
-        Action {
-            icon.source: "image://icon/mic"
-            onTriggered: appData.startSpeechRecognizer();
-        }
-    ]
-
     Connections {
         target: appData
-        onSpeechRecognized: nameField.text = result.replace(/^./, str => str.toUpperCase())
+        onSpeechRecognized: nameField.text = result
     }
 
     Flickable {
@@ -42,19 +37,42 @@ AppStackPage {
                     rightPadding: 10
                     text: qsTr("Name:")
                 }
-                Pane {
-                    topPadding: 0
-                    leftPadding: 10
-                    rightPadding: 10
-                    Layout.fillWidth: true
-                    TextField {
-                        id: nameField
+                RowLayout {
+                    width: parent.width
+                    Pane {
+                        topPadding: 0
                         leftPadding: 10
                         rightPadding: 10
-                        anchors.fill: parent
-                        placeholderText: qsTr("Tap here to insert name")
-                        selectByMouse: true
-                        text: task.name
+                        Layout.fillWidth: true
+                        TextField {
+                            id: nameField
+                            leftPadding: 10
+                            rightPadding: 10
+                            anchors.fill: parent
+                            placeholderText: qsTr("Modify activity name")
+                            selectByMouse: true
+                            inputMethodHints: Qt.ImhNoPredictiveText
+                            text: task.name
+                        }
+                    }
+                    ToolButton {
+                        icon.source: nameField.text.length > 0 && nameField.text !== task.name ? "image://icon/check" : "image://icon/mic"
+                        icon.color: Material.foreground
+                        focusPolicy: Qt.NoFocus
+                        onClicked: {
+                            nameField.focus = false
+                            if (nameField.text.length > 0 && nameField.text !== task.name) {
+                                var tmp = task.name
+                                if (appData.currentList.modifyTask(task, nameField.text)) {
+                                    showToast(qsTr("%1 modified to %2").arg(tmp).arg(task.name))
+                                    console.log(tmp + " modified to " + task.name)
+                                } else {
+                                    showError(qsTr("Task %1 exists").arg(nameField.text))
+                                }
+                            } else {
+                                appData.startSpeechRecognizer();
+                            }
+                        }
                     }
                 }
 
@@ -84,53 +102,36 @@ AppStackPage {
 
                 HorizontalDivider { }
 
-                LabelTitle {
+                LabelBody {
                     leftPadding: 10
                     rightPadding: 10
                     text: qsTr("Due date")
                 }
 
-                LabelBody {
-                    leftPadding: 10
-                    rightPadding: 10
-                    text: qsTr("Date:")
-                }
-                Pane {
-                    topPadding: 0
-                    leftPadding: 10
-                    rightPadding: 10
+                ItemDelegate {
+                    property string date: dateTimeString(task.due)
+                    icon.source: "image://icon/access_time"
+                    text: date.length ? date : "Set date"
+                    onClicked: datePicker.open()
                     Layout.fillWidth: true
-                    Button {
-                        id: dateField
-                        property string date: dateString(task.dueDate)
-                        leftPadding: 10
-                        rightPadding: 10
-                        text: date.length ? date : qsTr("Enter date")
-                        onClicked: {
-                            datePicker.open()
-                        }
-                    }
                 }
 
-                LabelBody {
-                    leftPadding: 10
-                    rightPadding: 10
-                    text: qsTr("Time:")
-                }
-                Pane {
-                    topPadding: 0
-                    leftPadding: 10
-                    rightPadding: 10
-                    Layout.fillWidth: true
-                    Button {
-                        id: timeField
-                        enabled: dateString(task.dueDate).length > 0
-                        property string time: timeString(task.dueTime)
-                        leftPadding: 10
-                        rightPadding: 10
-                        text: time.length ? time : qsTr("Enter time")
-                        onClicked: timePicker.open()
+                ItemDelegate {
+                    icon.source: task.alarm === Task.NoAlarm ? "image://icon/notifications_off" : "image://icon/notifications"
+                    text: task.alarm ? "Alarm set" : "Set alarm"
+                    enabled: task.due.toString() !== "Invalid Date"
+                    onClicked: {
+                        if (task.alarm) {
+                            task.alarm = Task.NoAlarm
+                            appWindow.showToast(qsTr("Alarm canceled"))
+                            appData.cancelAlarm(task.id)
+                        } else {
+                            task.alarm = Task.Notification
+                            appWindow.showToast(qsTr("Notification set to %1").arg(dateTimeString(task.due)))
+                            appData.setAlarm(task.id, task.due.getTime(), task.name)
+                        }
                     }
+                    Layout.fillWidth: true
                 }
 
                 HorizontalDivider { }
@@ -172,52 +173,24 @@ AppStackPage {
                         text: dateTimeString(task.created)
                     }
                 }
-
-                HorizontalDivider { }
-
-                ButtonRaised {
-                    text: qsTr("Modify")
-                    onClicked: {
-                        if (nameField.text.length > 0) {
-                            if (appData.currentList.modifyTask(task, nameField.text)) {
-                                showToast(qsTr("%1 modified").arg(task.name))
-                                pop()
-                                console.log("modified: " + task.name)
-                            } else {
-                                showError(qsTr("Task %1 exists").arg(nameField.text))
-                            }
-                        } else {
-                            showError(qsTr("The name field is empty"))
-                        }
-                    }
-                    Layout.alignment: Qt.AlignHCenter
-                }
             }
         }
     }
+
     DatePicker {
         id: datePicker
         onClosed: {
             if (isOK) {
-                task.dueDate = datePicker.selectedDate
+                task.due = datePicker.selectedDate
+                if (task.alarm) {
+                    appData.setAlarm(task.id, task.due.getTime(), task.name)
+                }
             } else if (clear) {
-                task.dueDate = ""
-                task.dueTime = ""
-            }
-        }
-    }
-    TimePicker {
-        id: timePicker
-        onClosed: {
-            if (isOK) {
-                var date = new Date(task.dueDate.toString())
-                date.setHours(timePicker.hrsDisplay)
-                date.setMinutes(timePicker.minutesDisplay)
-                task.dueTime = date
-                appData.setAlarm(task.id, date.getTime(), task.name)
-            } else if (clear) {
-                task.dueTime = ""
-                appData.cancelAlarm(task.id)
+                task.due = ""
+                if (task.alarm) {
+                    task.alarm = Task.NoAlarm
+                    appData.cancelAlarm(task.id)
+                }
             }
         }
     }

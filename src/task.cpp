@@ -6,6 +6,7 @@ Task::Task(const QString &name, int id, QObject *parent)
     , m_name(name)
     , m_checked(false)
     , m_created(QDateTime::currentDateTime())
+    , m_alarm(AlarmMode::NoAlarm)
 {
     connect(this, &Task::checkedChanged,
             this, [=] (bool checked) {
@@ -24,8 +25,8 @@ Task *Task::fromJson(const QJsonObject &json)
     c->setChecked(json["checked"].toBool());
     c->setCreated(QDateTime::fromString(json["created"].toString(), Qt::ISODate));
     c->setNotes(json["notes"].toString());
-    c->setDueDate(QDate::fromString(json["dueDate"].toString(), Qt::ISODate));
-    c->setDueTime(QTime::fromString(json["dueTime"].toString(), Qt::ISODate));
+    c->setDue(QDateTime::fromString(json["due"].toString(), Qt::ISODate));
+    c->setAlarm(AlarmMode(json["alarm"].toInt()));
     c->setCompleted(QDateTime::fromString(json["completed"].toString(), Qt::ISODate));
     return c;
 }
@@ -38,8 +39,8 @@ QJsonObject Task::toJson() const
     json["checked"] = checked();
     json["created"] = created().toString(Qt::ISODate);
     json["notes"] = notes();
-    json["dueDate"] = dueDate().toString(Qt::ISODate);
-    json["dueTime"] = dueTime().toString(Qt::ISODate);
+    json["due"] = due().toString(Qt::ISODate);
+    json["alarm"] = alarm();
     json["completed"] = completed().toString(Qt::ISODate);
     return json;
 }
@@ -116,32 +117,32 @@ void Task::setNotes(const QString &notes)
     emit notesChanged(m_notes);
 }
 
-QDate Task::dueDate() const
+QDateTime Task::due() const
 {
-    return m_dueDate;
+    return m_due;
 }
 
-void Task::setDueDate(const QDate &dueDate)
+void Task::setDue(const QDateTime &due)
 {
-    if (m_dueDate == dueDate)
+    if (m_due == due)
         return;
 
-    m_dueDate = dueDate;
-    emit dueDateChanged(m_dueDate);
+    m_due = due;
+    emit dueChanged(m_due);
 }
 
-QTime Task::dueTime() const
+Task::AlarmMode Task::alarm() const
 {
-    return m_dueTime;
+    return m_alarm;
 }
 
-void Task::setDueTime(const QTime &dueTime)
+void Task::setAlarm(AlarmMode alarm)
 {
-    if (m_dueTime == dueTime)
+    if (m_alarm == alarm)
         return;
 
-    m_dueTime = dueTime;
-    emit dueTimeChanged(m_dueTime);
+    m_alarm = alarm;
+    emit alarmChanged(m_alarm);
 }
 
 QDateTime Task::completed() const

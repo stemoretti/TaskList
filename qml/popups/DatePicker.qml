@@ -17,6 +17,9 @@ Popup {
     property bool isOK: false
     property bool clear: false
 
+    property string hrsDisplay: selectedDate.getHours()
+    property string minutesDisplay: selectedDate.getMinutes()
+
     x: (parent.width - calendarWidth) / 2
     y: ((parent.height - calendarHeight) / 2) - 24
     implicitWidth: calendarWidth
@@ -32,21 +35,50 @@ Popup {
         spacing: 0
 
         Rectangle {
+            height: 90
             Layout.fillWidth: true
             Layout.fillHeight: true
             color: primaryColor
-            RowLayout {
-                anchors.fill: parent
-                spacing: 6
-                Item {
-                    Layout.leftMargin: 10
+            TextInput {
+                text: (hrsDisplay < 10 ? "0" : "") + hrsDisplay + ":" +
+                      (minutesDisplay < 10 ? "0" : "") + minutesDisplay
+                font.pointSize: 50
+                color: textOnPrimaryDark
+                anchors.centerIn: parent
+                validator: RegExpValidator { regExp: /^([01]?\d|2[0-3]):([0-5]?\d)$/ }
+                inputMask: "00:00"
+                inputMethodHints: Qt.ImhTime | Qt.ImhDigitsOnly
+                onFocusChanged: {
+                    if (focus) {
+                        text = "00:00"
+                        cursorPosition = 0
+                    }
                 }
-                ButtonFlat {
+                onTextChanged: {
+                    if (acceptableInput) {
+                        var date = new Date(datePickerRoot.selectedDate)
+                        date.setHours(text.substr(0, 2))
+                        date.setMinutes(text.substr(3, 2))
+                        datePickerRoot.selectedDate = date
+                    }
+                }
+            }
+        }
+
+        Rectangle {
+            Layout.fillWidth: true
+            implicitHeight: monthRow.implicitHeight
+            color: primaryDarkColor
+
+            RowLayout {
+                id: monthRow
+                spacing: 6
+                width: parent.width
+                ToolButton {
                     leftPadding: 12
                     rightPadding: 12
-                    text: "<"
-                    textColor: textOnPrimary
-                    font.pointSize: fontSizeTitle
+                    icon.source: "image://icon/arrow_back"
+                    icon.color: textOnPrimary
                     onClicked: {
                         if (datePickerRoot.displayMonth > 0) {
                             datePickerRoot.displayMonth--
@@ -56,30 +88,18 @@ Popup {
                         }
                     }
                 }
-//                RowLayout {
-//                    spacing: 0
-//                    Layout.fillWidth: true
-//                    LabelTitle {
-//                        text: locale.monthName(monthGrid.month)
-//                        elide: Text.ElideRight
-//                        color: textOnPrimary
-//                        horizontalAlignment: Qt.AlignHCenter
-//                        Layout.fillWidth: true
-//                    }
-                    LabelTitle {
-                        text: currentLocale.monthName(monthGrid.month) + " " + monthGrid.year
-                        elide: Text.ElideRight
-                        color: textOnPrimary
-                        horizontalAlignment: Qt.AlignHCenter
-                        Layout.fillWidth: true
-                    }
-//                }
-                ButtonFlat {
+                LabelTitle {
+                    text: currentLocale.monthName(monthGrid.month) + " " + monthGrid.year
+                    elide: Text.ElideRight
+                    color: textOnPrimary
+                    horizontalAlignment: Qt.AlignHCenter
+                    Layout.fillWidth: true
+                }
+                ToolButton {
                     leftPadding: 12
                     rightPadding: 12
-                    text: ">"
-                    font.pointSize: fontSizeTitle
-                    textColor: textOnPrimary
+                    icon.source: "image://icon/arrow_forward"
+                    icon.color: textOnPrimary
                     onClicked: {
                         if (datePickerRoot.displayMonth < 11) {
                             datePickerRoot.displayMonth++
@@ -88,9 +108,6 @@ Popup {
                             datePickerRoot.displayYear++
                         }
                     }
-                }
-                Item {
-                    Layout.rightMargin: 10
                 }
             }
         }
@@ -123,7 +140,10 @@ Popup {
             onClicked: {
                 // Important: check the month to avoid clicking on days outside where opacity 0
                 if (date.getMonth() === datePickerRoot.displayMonth) {
-                    datePickerRoot.selectedDate = date
+                    var tmpDate = date
+                    tmpDate.setHours(hrsDisplay)
+                    tmpDate.setMinutes(minutesDisplay)
+                    datePickerRoot.selectedDate = tmpDate
                     console.log("tapped on a date ")
                 } else {
                     console.log("outside valid month " + date.getMonth())
@@ -148,11 +168,9 @@ Popup {
 
                 background: Rectangle {
                     anchors.centerIn: parent
-                    width: parent.width + 2
-                    height: parent.height + 2
+                    width: Math.min(parent.height + 2, parent.width + 2)
+                    height: Math.min(parent.height + 2, parent.width + 2)
                     radius: width / 2
-//                    border.width: 1
-//                    border.color: "darkgray"
                     color: parent.selected ? primaryColor : "transparent"
                 }
             }
@@ -161,6 +179,7 @@ Popup {
         RowLayout {
             Layout.alignment: Qt.AlignHCenter
             spacing: 10
+
             ButtonFlat {
                 text: qsTr("Clear")
                 textColor: accentColor
@@ -168,6 +187,8 @@ Popup {
                     datePickerRoot.selectedDate = new Date()
                     datePickerRoot.displayMonth = datePickerRoot.selectedDate.getMonth()
                     datePickerRoot.displayYear = datePickerRoot.selectedDate.getFullYear()
+                    datePickerRoot.hrsDisplay = datePickerRoot.selectedDate.getHours()
+                    datePickerRoot.minutesDisplay = datePickerRoot.selectedDate.getMinutes()
                     datePickerRoot.clear = true
                     datePickerRoot.close()
                 }
@@ -192,6 +213,7 @@ Popup {
             }
         }
     }
+
     onOpened: {
         datePickerRoot.isOK = false
         datePickerRoot.clear = false

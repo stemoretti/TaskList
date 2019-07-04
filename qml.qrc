@@ -29,7 +29,6 @@
         <file>qml/popups/ColorSelectionPopup.qml</file>
         <file>qml/popups/DatePicker.qml</file>
         <file>qml/popups/LocalizationPopup.qml</file>
-        <file>qml/popups/TimePicker.qml</file>
         <file>qml/pages/TaskDetailsPage.qml</file>
         <file>qml/pages/DragDropListView.qml</file>
         <file>qml/pages/SortedListView.qml</file>
