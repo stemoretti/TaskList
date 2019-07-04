@@ -22,8 +22,6 @@ public:
     bool checkDirs() const;
 
     void readListFile();
-
-    Q_INVOKABLE
     void writeListFile() const;
 
     List *findList(const QString &name) const;

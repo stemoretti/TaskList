@@ -38,6 +38,7 @@ AppStackPage {
                         rightPadding: 10
                         anchors.fill: parent
                         placeholderText: qsTr("Tap here to insert name")
+                        inputMethodHints: Qt.ImhNoPredictiveText
                         selectByMouse: true
                     }
                 }

@@ -166,8 +166,10 @@ Java_com_github_stemoretti_tasklist_MainActivity_sendResult(JNIEnv *env,
     Q_UNUSED(env);
     Q_UNUSED(obj);
     auto result = QAndroidJniObject(text).toString();
-    if (!result.isEmpty())
+    if (!result.isEmpty()) {
+        result[0] = result[0].toUpper();
         emit AppData::instance().speechRecognized(result);
+    }
 }
 
 void AppData::startSpeechRecognizer() const

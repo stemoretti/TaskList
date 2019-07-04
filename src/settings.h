@@ -21,6 +21,7 @@ public:
     static Settings &instance();
 
     void readSettingsFile();
+    void writeSettingsFile() const;
 
     //{{{ Properties getters declarations
 
@@ -44,8 +45,6 @@ signals:
     //}}} Properties signals
 
 public slots:
-    void writeSettingsFile() const;
-
     //{{{ Properties setters declarations
 
     void setDarkTheme(bool darkTheme);
