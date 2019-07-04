@@ -86,12 +86,7 @@ AppStackPage {
         MenuItem {
             enabled: clist
             text: qsTr("Add task")
-            onTriggered: {
-                // If the menu is not disabled, a double click will push the page twice.
-                // The menu will be re-enabled the next time it is shown.
-                optionsMenu.enabled = false
-                push(Qt.resolvedUrl("AddTaskPage.qml"))
-            }
+            onTriggered: addNewTaskPopup.open()
         }
         MenuItem {
             enabled: clist && clist.completedTasks > 0
@@ -113,6 +108,66 @@ AppStackPage {
             enabled: clist && clist.tasks.count
             text: hideCompleted ? qsTr("Show completed") : qsTr("Hide completed")
             onTriggered: clist.hideCompleted = !clist.hideCompleted
+        }
+    }
+
+    Connections {
+        target: appData
+        onSpeechRecognized: inputField.text = result
+    }
+
+    Popup {
+        id: addNewTaskPopup
+
+        property int keyboardHeight: Qt.inputMethod.keyboardRectangle.height
+
+        height: 70
+        width: parent.width
+        y: keyboardHeight > 0 ? (parent.height - height - keyboardHeight) : 0
+        closePolicy: Popup.CloseOnPressOutside | Popup.CloseOnEscape
+        modal: true
+        dim: true
+        focus: true
+
+        background: Rectangle {
+            anchors.fill: parent
+            color: Material.background
+        }
+
+        onAboutToShow: inputField.text = ""
+
+        RowLayout {
+            anchors.fill: parent
+
+            TextField {
+                id: inputField
+                focus: true
+                leftPadding: 10
+                rightPadding: 10
+                selectByMouse: true
+                placeholderText: qsTr("Insert activity name here")
+                onEditingFinished: addNewTaskPopup.close()
+                inputMethodHints: Qt.ImhNoPredictiveText
+                Layout.fillWidth: true
+            }
+
+            ToolButton {
+                icon.source: inputField.text.length ? "image://icon/send" : "image://icon/mic"
+                icon.color: Material.foreground
+                focusPolicy: Qt.NoFocus
+                onClicked: {
+                    if (inputField.text.length > 0) {
+                        if (clist.newTask(inputField.text)) {
+                            showToast(qsTr("Added %1 to list").arg(inputField.text))
+                            inputField.text = ""
+                        } else {
+                            showError(qsTr("%1 is already in list").arg(inputField.text))
+                        }
+                    } else {
+                        appData.startSpeechRecognizer();
+                    }
+                }
+            }
         }
     }
 
