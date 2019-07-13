@@ -80,7 +80,7 @@ Item {
         model: clist ? clist.sortedList : 0
         delegate: listDelegate
 
-        section.property: "dueDate"
+        section.property: "due"
         section.delegate: sectionDelegate
 
         ScrollIndicator.vertical: ScrollIndicator { }
