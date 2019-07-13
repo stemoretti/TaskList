@@ -119,11 +119,9 @@ AppStackPage {
     Popup {
         id: addNewTaskPopup
 
-        property int keyboardHeight: Qt.inputMethod.keyboardRectangle.height
-
         height: 70
         width: parent.width
-        y: keyboardHeight > 0 ? (parent.height - height - keyboardHeight) : 0
+        y: 0
         closePolicy: Popup.CloseOnPressOutside | Popup.CloseOnEscape
         modal: true
         dim: true
