@@ -23,15 +23,20 @@ public:
     void readSettingsFile();
     void writeSettingsFile() const;
 
-    //{{{ Properties getters declarations
+    //{{{ Properties getters/setters declarations
 
     bool darkTheme() const;
+    void setDarkTheme(bool darkTheme);
     QColor primaryColor() const;
+    void setPrimaryColor(const QColor &primaryColor);
     QColor accentColor() const;
+    void setAccentColor(const QColor &accentColor);
     QString language() const;
+    void setLanguage(const QString &language);
     QString country() const;
+    void setCountry(const QString &country);
 
-    //}}} Properties getters declarations
+    //}}} Properties getters/setters declarations
 
 signals:
     //{{{ Properties signals
@@ -45,15 +50,6 @@ signals:
     //}}} Properties signals
 
 public slots:
-    //{{{ Properties setters declarations
-
-    void setDarkTheme(bool darkTheme);
-    void setPrimaryColor(const QColor &primaryColor);
-    void setAccentColor(const QColor &accentColor);
-    void setLanguage(const QString &language);
-    void setCountry(const QString &country);
-
-    //}}} Properties setters declarations
 
 private:
     explicit Settings(QObject *parent = nullptr);

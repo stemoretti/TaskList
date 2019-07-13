@@ -37,11 +37,12 @@ public:
     void cancelAlarm(int id) const;
 #endif
 
-    //{{{ Properties getters declarations
+    //{{{ Properties getters/setters declarations
 
     List *currentList() const;
+    void setCurrentList(List *currentList);
 
-    //}}} Properties getters declarations
+    //}}} Properties getters/setters declarations
 
 signals:
 #ifdef Q_OS_ANDROID
@@ -59,12 +60,6 @@ public slots:
     void selectList(const QString &name);
     void removeList(const QString &name);
     void removeList(int index);
-
-    //{{{ Properties setters declarations
-
-    void setCurrentList(List *currentList);
-
-    //}}} Properties setters declarations
 
 private:
     explicit AppData(QObject *parent = nullptr);

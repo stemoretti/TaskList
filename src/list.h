@@ -30,15 +30,20 @@ public:
     Task *findTask(const QString &name) const;
     void addTask(Task *task);
 
-    //{{{ Properties getters declarations
+    //{{{ Properties getters/setters declarations
 
     QString name() const;
+    void setName(const QString &name);
     int completedTasks() const;
+    void setCompletedTasks(int completedTasks);
     bool hideCompleted() const;
+    void setHideCompleted(bool hideCompleted);
     bool sortByDueDate() const;
+    void setSortByDueDate(bool sortByDueDate);
     SortFilterModel *sortedList() const;
+    void setSortedList(SortFilterModel *sortedList);
 
-    //}}} Properties getters declarations
+    //}}} Properties getters/setters declarations
 
 signals:
     //{{{ Properties signals
@@ -58,16 +63,6 @@ public slots:
     void removeTask(const QString &name) const;
     bool modifyTask(QObject *obj, const QString &name) const;
     bool moveTask(int from, int to) const;
-
-    //{{{ Properties setters declarations
-
-    void setName(const QString &name);
-    void setCompletedTasks(int completedTasks);
-    void setHideCompleted(bool hideCompleted);
-    void setSortByDueDate(bool sortByDueDate);
-    void setSortedList(SortFilterModel *sortedList);
-
-    //}}} Properties setters declarations
 
 private:
     //{{{ Properties declarations

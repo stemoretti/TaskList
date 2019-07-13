@@ -27,18 +27,26 @@ public:
     static Task *fromJson(const QJsonObject &json);
     QJsonObject toJson() const;
 
-    //{{{ Properties getters declarations
+    //{{{ Properties getters/setters declarations
 
     int id() const;
+    void setId(int id);
     QString name() const;
+    void setName(const QString &name);
     bool checked() const;
+    void setChecked(bool checked);
     QDateTime created() const;
+    void setCreated(const QDateTime &created);
     QString notes() const;
+    void setNotes(const QString &notes);
     QDateTime due() const;
+    void setDue(const QDateTime &due);
     AlarmMode alarm() const;
+    void setAlarm(AlarmMode alarm);
     QDateTime completed() const;
+    void setCompleted(const QDateTime &completed);
 
-    //}}} Properties getters declarations
+    //}}} Properties getters/setters declarations
 
 signals:
     //{{{ Properties signals
@@ -55,18 +63,6 @@ signals:
     //}}} Properties signals
 
 public slots:
-    //{{{ Properties setters declarations
-
-    void setId(int id);
-    void setName(const QString &name);
-    void setChecked(bool checked);
-    void setCreated(const QDateTime &created);
-    void setNotes(const QString &notes);
-    void setDue(const QDateTime &due);
-    void setAlarm(AlarmMode alarm);
-    void setCompleted(const QDateTime &completed);
-
-    //}}} Properties setters declarations
 
 private:
     //{{{ Properties declarations
