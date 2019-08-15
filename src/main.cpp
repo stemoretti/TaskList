@@ -19,6 +19,11 @@ int main(int argc, char *argv[])
 #ifdef QT_DEBUG
     qputenv("QML_DISABLE_DISK_CACHE", "true");
 #endif
+    // From 5.12.3 onwards this environment variable must be set or
+    // predictive text won't be disabled (QTBUG-75774)
+    // https://code.qt.io/cgit/qt/qtbase.git/plain/dist/changes-5.12.3/?h=v5.12.3
+    qputenv("QT_ANDROID_ENABLE_WORKAROUND_TO_DISABLE_PREDICTIVE_TEXT", "true");
+
     QGuiApplication app(argc, argv);
 
     if (QFontDatabase::addApplicationFont(":/icons/MaterialIcons-Regular.ttf") == -1)
