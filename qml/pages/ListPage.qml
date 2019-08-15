@@ -121,15 +121,15 @@ AppStackPage {
 
         height: 70
         width: parent.width
-        y: 0
+        y: 0 //-appWindow.header.height
         closePolicy: Popup.CloseOnPressOutside | Popup.CloseOnEscape
         modal: true
-        dim: true
+        dim: false
         focus: true
 
         background: Rectangle {
             anchors.fill: parent
-            color: Material.background
+            color: primaryColor
         }
 
         onAboutToShow: inputField.text = ""
@@ -137,23 +137,48 @@ AppStackPage {
         RowLayout {
             anchors.fill: parent
 
-            TextField {
-                id: inputField
-                focus: true
-                leftPadding: 10
-                rightPadding: 10
-                selectByMouse: true
-                placeholderText: qsTr("Insert activity name here")
-                onEditingFinished: addNewTaskPopup.close()
-                inputMethodHints: Qt.ImhNoPredictiveText
+            Rectangle {
+                radius: inputField.height / 2
+                color: Material.background
                 Layout.fillWidth: true
+                Layout.fillHeight: true
+                RowLayout {
+                    anchors.fill: parent
+                    spacing: 0
+                    TextField {
+                        id: inputField
+                        focus: true
+                        leftPadding: 10
+                        selectByMouse: true
+                        placeholderText: qsTr("Insert activity name here")
+                        onEditingFinished: addNewTaskPopup.close()
+                        inputMethodHints: Qt.ImhNoPredictiveText
+                        color: Material.foreground
+                        background: null
+                        Layout.fillWidth: true
+                    }
+
+                    ToolButton {
+                        icon.source: inputField.text.length ? "image://icon/clear"
+                                                            : "image://icon/mic"
+                        icon.color: Material.foreground
+                        focusPolicy: Qt.NoFocus
+                        onClicked: {
+                            if (inputField.text.length > 0)
+                                inputField.text = ""
+                            else
+                                appData.startSpeechRecognizer();
+                        }
+                    }
+                }
             }
 
             ToolButton {
-                icon.source: inputField.text.length ? "image://icon/send" : "image://icon/mic"
-                icon.color: Material.foreground
+                icon.source: "image://icon/send"
+                icon.color: textOnPrimary
                 focusPolicy: Qt.NoFocus
                 onClicked: {
+                    Qt.inputMethod.commit()
                     if (inputField.text.length > 0) {
                         if (clist.newTask(inputField.text)) {
                             showToast(qsTr("Added %1 to list").arg(inputField.text))
@@ -162,7 +187,7 @@ AppStackPage {
                             showError(qsTr("%1 is already in list").arg(inputField.text))
                         }
                     } else {
-                        appData.startSpeechRecognizer();
+                        showError(qsTr("Input field is empty"))
                     }
                 }
             }
