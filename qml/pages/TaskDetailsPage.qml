@@ -49,7 +49,7 @@ AppStackPage {
                             leftPadding: 10
                             rightPadding: 10
                             anchors.fill: parent
-                            placeholderText: qsTr("Modify activity name")
+                            placeholderText: qsTr("Modify task name")
                             selectByMouse: true
                             inputMethodHints: Qt.ImhNoPredictiveText
                             text: task.name

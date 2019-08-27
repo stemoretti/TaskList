@@ -40,6 +40,7 @@ App {
         width: Math.min(240,  Math.min(appWindow.width, appWindow.height) / 3 * 2 )
         height: appWindow.height
 
+        // Disable menuColumn or a double click will push the page twice
         onAboutToShow: menuColumn.enabled = true
 
         Flickable {

@@ -27,12 +27,16 @@ public:
 
     bool darkTheme() const;
     void setDarkTheme(bool darkTheme);
+
     QColor primaryColor() const;
     void setPrimaryColor(const QColor &primaryColor);
+
     QColor accentColor() const;
     void setAccentColor(const QColor &accentColor);
+
     QString language() const;
     void setLanguage(const QString &language);
+
     QString country() const;
     void setCountry(const QString &country);
 

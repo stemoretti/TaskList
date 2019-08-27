@@ -150,7 +150,7 @@ AppStackPage {
                         focus: true
                         leftPadding: 10
                         selectByMouse: true
-                        placeholderText: qsTr("Insert activity name here")
+                        placeholderText: qsTr("Insert task name here")
                         onEditingFinished: addNewTaskPopup.close()
                         inputMethodHints: Qt.ImhNoPredictiveText
                         color: Material.foreground
