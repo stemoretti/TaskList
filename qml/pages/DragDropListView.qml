@@ -54,8 +54,8 @@ Item {
                         Layout.fillWidth: true
                     }
                     LabelBody {
-                        visible: model.due < new Date()
-                        text: dateString(model.due)
+                        visible: makeDate(model.dueDate, model.dueTime) < new Date()
+                        text: dateTimeString(makeDate(model.dueDate, model.dueTime))
                         color: isDarkTheme ? "pink" : "red"
                         elide: Text.ElideRight
                         Layout.rightMargin: 10

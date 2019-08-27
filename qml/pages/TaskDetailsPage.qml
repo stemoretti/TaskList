@@ -109,26 +109,31 @@ AppStackPage {
                 }
 
                 ItemDelegate {
-                    property string date: dateTimeString(task.due)
+                    property string date: dateTimeString(makeDate(task.dueDate, task.dueTime))
                     icon.source: "image://icon/access_time"
                     text: date.length ? date : "Set date"
-                    onClicked: datePicker.open()
+                    onClicked: {
+                        if (date.length)
+                            datePicker.selectedDate = makeDate(task.dueDate, task.dueTime)
+                        datePicker.open()
+                    }
                     Layout.fillWidth: true
                 }
 
                 ItemDelegate {
                     icon.source: task.alarm === Task.NoAlarm ? "image://icon/notifications_off" : "image://icon/notifications"
                     text: task.alarm ? "Alarm set" : "Set alarm"
-                    enabled: task.due.toString() !== "Invalid Date"
+                    enabled: task.dueDate.toString() !== "Invalid Date"
                     onClicked: {
                         if (task.alarm) {
                             task.alarm = Task.NoAlarm
                             appWindow.showToast(qsTr("Alarm canceled"))
                             appData.cancelAlarm(task.id)
                         } else {
+                            var datetime = makeDate(task.dueDate, task.dueTime)
                             task.alarm = Task.Notification
-                            appWindow.showToast(qsTr("Notification set to %1").arg(dateTimeString(task.due)))
-                            appData.setAlarm(task.id, task.due.getTime(), task.name)
+                            appWindow.showToast(qsTr("Notification set to %1").arg(dateTimeString(datetime)))
+                            appData.setAlarm(task.id, datetime.getTime(), task.name)
                         }
                     }
                     Layout.fillWidth: true
@@ -181,12 +186,15 @@ AppStackPage {
         id: datePicker
         onClosed: {
             if (isOK) {
-                task.due = datePicker.selectedDate
+                var datetime = datePicker.selectedDate
+                task.dueDate = datetime
+                task.dueTime = datetime
                 if (task.alarm) {
-                    appData.setAlarm(task.id, task.due.getTime(), task.name)
+                    appData.setAlarm(task.id, datetime.getTime(), task.name)
                 }
             } else if (clear) {
-                task.due = ""
+                task.dueDate = ""
+                task.dueTime = ""
                 if (task.alarm) {
                     task.alarm = Task.NoAlarm
                     appData.cancelAlarm(task.id)

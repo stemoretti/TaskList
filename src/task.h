@@ -14,7 +14,8 @@ class Task : public QObject
     Q_PROPERTY(bool checked READ checked WRITE setChecked NOTIFY checkedChanged)
     Q_PROPERTY(QDateTime created READ created NOTIFY createdChanged)
     Q_PROPERTY(QString notes READ notes WRITE setNotes NOTIFY notesChanged)
-    Q_PROPERTY(QDateTime due READ due WRITE setDue NOTIFY dueChanged)
+    Q_PROPERTY(QDate dueDate READ dueDate WRITE setDueDate NOTIFY dueDateChanged)
+    Q_PROPERTY(QTime dueTime READ dueTime WRITE setDueTime NOTIFY dueTimeChanged)
     Q_PROPERTY(AlarmMode alarm READ alarm WRITE setAlarm NOTIFY alarmChanged)
     Q_PROPERTY(QDateTime completed READ completed WRITE setCompleted NOTIFY completedChanged)
 
@@ -31,18 +32,28 @@ public:
 
     int id() const;
     void setId(int id);
+
     QString name() const;
     void setName(const QString &name);
+
     bool checked() const;
     void setChecked(bool checked);
+
     QDateTime created() const;
     void setCreated(const QDateTime &created);
+
     QString notes() const;
     void setNotes(const QString &notes);
-    QDateTime due() const;
-    void setDue(const QDateTime &due);
+
+    QDate dueDate() const;
+    void setDueDate(const QDate &dueDate);
+
+    QTime dueTime() const;
+    void setDueTime(const QTime &dueTime);
+
     AlarmMode alarm() const;
     void setAlarm(AlarmMode alarm);
+
     QDateTime completed() const;
     void setCompleted(const QDateTime &completed);
 
@@ -56,7 +67,8 @@ signals:
     void checkedChanged(bool checked);
     void createdChanged(QDateTime created);
     void notesChanged(const QString &notes);
-    void dueChanged(const QDateTime &due);
+    void dueDateChanged(const QDate &dueDate);
+    void dueTimeChanged(const QTime &dueTime);
     void alarmChanged(AlarmMode alarm);
     void completedChanged(const QDateTime &completed);
 
@@ -72,7 +84,8 @@ private:
     bool m_checked;
     QDateTime m_created;
     QString m_notes;
-    QDateTime m_due;
+    QDate m_dueDate;
+    QTime m_dueTime;
     AlarmMode m_alarm;
     QDateTime m_completed;
 

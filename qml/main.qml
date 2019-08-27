@@ -14,6 +14,13 @@ App {
     width: 360
     height: 480
 
+    function makeDate(date, time) {
+        var dateTime = new Date()
+        dateTime.setTime(date)
+        dateTime.setHours(time.getHours(), time.getMinutes(), time.getSeconds())
+        return dateTime
+    }
+
     StackView {
         id: pageStack
         anchors.fill: parent

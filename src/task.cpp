@@ -25,7 +25,8 @@ Task *Task::fromJson(const QJsonObject &json)
     c->setChecked(json["checked"].toBool());
     c->setCreated(QDateTime::fromString(json["created"].toString(), Qt::ISODate));
     c->setNotes(json["notes"].toString());
-    c->setDue(QDateTime::fromString(json["due"].toString(), Qt::ISODate));
+    c->setDueDate(QDate::fromString(json["dueDate"].toString(), "yyyy-MM-dd"));
+    c->setDueTime(QTime::fromString(json["dueTime"].toString(), "hh:mm:ss"));
     c->setAlarm(AlarmMode(json["alarm"].toInt()));
     c->setCompleted(QDateTime::fromString(json["completed"].toString(), Qt::ISODate));
     return c;
@@ -39,7 +40,8 @@ QJsonObject Task::toJson() const
     json["checked"] = checked();
     json["created"] = created().toString(Qt::ISODate);
     json["notes"] = notes();
-    json["due"] = due().toString(Qt::ISODate);
+    json["dueDate"] = dueDate().toString("yyyy-MM-dd");
+    json["dueTime"] = dueTime().toString("hh:mm:ss");
     json["alarm"] = alarm();
     json["completed"] = completed().toString(Qt::ISODate);
     return json;
@@ -117,20 +119,33 @@ void Task::setNotes(const QString &notes)
     emit notesChanged(m_notes);
 }
 
-QDateTime Task::due() const
+QDate Task::dueDate() const
 {
-    return m_due;
+    return m_dueDate;
 }
 
-void Task::setDue(const QDateTime &due)
+void Task::setDueDate(const QDate &dueDate)
 {
-    if (m_due == due)
+    if (m_dueDate == dueDate)
         return;
 
-    m_due = due;
-    emit dueChanged(m_due);
+    m_dueDate = dueDate;
+    emit dueDateChanged(m_dueDate);
 }
 
+QTime Task::dueTime() const
+{
+    return m_dueTime;
+}
+
+void Task::setDueTime(const QTime &dueTime)
+{
+    if (m_dueTime == dueTime)
+        return;
+
+    m_dueTime = dueTime;
+    emit dueTimeChanged(m_dueTime);
+}
 Task::AlarmMode Task::alarm() const
 {
     return m_alarm;
