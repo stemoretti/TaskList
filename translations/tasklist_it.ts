@@ -254,17 +254,17 @@
 <context>
     <name>DatePicker</name>
     <message>
-        <location filename="../qml/popups/DatePicker.qml" line="165"/>
+        <location filename="../qml/popups/DatePicker.qml" line="185"/>
         <source>Clear</source>
         <translation>Cancella</translation>
     </message>
     <message>
-        <location filename="../qml/popups/DatePicker.qml" line="177"/>
+        <location filename="../qml/popups/DatePicker.qml" line="199"/>
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../qml/popups/DatePicker.qml" line="185"/>
+        <location filename="../qml/popups/DatePicker.qml" line="207"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -321,37 +321,57 @@
         <translation>Aggiungi attività</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="98"/>
+        <location filename="../qml/pages/ListPage.qml" line="93"/>
         <source>Remove completed</source>
         <translation>Rimuovi completate</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="103"/>
+        <location filename="../qml/pages/ListPage.qml" line="98"/>
         <source>Remove all</source>
         <translation>Rimuovi tutte</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="108"/>
+        <location filename="../qml/pages/ListPage.qml" line="103"/>
         <source>Custom order</source>
         <translation>Ordine personale</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="108"/>
+        <location filename="../qml/pages/ListPage.qml" line="103"/>
         <source>Sort by due date</source>
         <translation>Ordina per scadenza</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="114"/>
+        <location filename="../qml/pages/ListPage.qml" line="109"/>
         <source>Hide completed</source>
         <translation>Nascondi completate</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="114"/>
+        <location filename="../qml/pages/ListPage.qml" line="109"/>
         <source>Show completed</source>
         <translation>Mostra completate</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="121"/>
+        <location filename="../qml/pages/ListPage.qml" line="153"/>
+        <source>Insert task name here</source>
+        <translation>Inserisci nome attività</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/ListPage.qml" line="184"/>
+        <source>Added %1 to list</source>
+        <translation>%1 aggiunto alla lista</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/ListPage.qml" line="187"/>
+        <source>%1 is already in list</source>
+        <translation>%1 è già nella lista</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/ListPage.qml" line="190"/>
+        <source>Input field is empty</source>
+        <translation>La casella inserimento è vuota</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/ListPage.qml" line="199"/>
         <source>Do you want to clear the selected tasks?
 
 </source>
@@ -360,17 +380,17 @@
 </translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="126"/>
+        <location filename="../qml/pages/ListPage.qml" line="204"/>
         <source>One completed task removed</source>
         <translation>Una attività completata rimossa</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="127"/>
+        <location filename="../qml/pages/ListPage.qml" line="205"/>
         <source>%1 completed tasks removed</source>
         <translation>%1 attività completate rimosse</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="136"/>
+        <location filename="../qml/pages/ListPage.qml" line="214"/>
         <source>Do you want to clear the list?
 
 </source>
@@ -379,7 +399,7 @@
 </translation>
     </message>
     <message>
-        <location filename="../qml/pages/ListPage.qml" line="140"/>
+        <location filename="../qml/pages/ListPage.qml" line="218"/>
         <source>List cleared</source>
         <translation>Lista svuotata</translation>
     </message>
@@ -387,7 +407,7 @@
 <context>
     <name>NewListPage</name>
     <message>
-        <location filename="../qml/pages/NewListPage.qml" line="48"/>
+        <location filename="../qml/pages/NewListPage.qml" line="49"/>
         <source>Add List</source>
         <translation>Aggiungi Lista</translation>
     </message>
@@ -397,12 +417,12 @@
         <translation>Crea Nuova Lista</translation>
     </message>
     <message>
-        <location filename="../qml/pages/NewListPage.qml" line="54"/>
+        <location filename="../qml/pages/NewListPage.qml" line="55"/>
         <source>Created list %1</source>
         <translation>Creata Lista %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/NewListPage.qml" line="58"/>
+        <location filename="../qml/pages/NewListPage.qml" line="59"/>
         <source>List %1 exists</source>
         <translation>Lista %1 esiste già</translation>
     </message>
@@ -513,128 +533,85 @@ Do you want to exit and leave the App ?
 <context>
     <name>TaskDetailsPage</name>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="13"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="15"/>
         <source>Task Details</source>
         <translation>Dettagli attività</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="43"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="38"/>
         <source>Name:</source>
         <translation>Nome:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="55"/>
-        <source>Tap here to insert name</source>
-        <translation>Tocca qui per inserire nome</translation>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="52"/>
+        <source>Modify task name</source>
+        <translation>Modifica nome attività</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="96"/>
-        <source>Date:</source>
-        <translation>Data:</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="64"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="82"/>
         <source>Notes:</source>
         <translation>Note:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="90"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="108"/>
         <source>Due date</source>
         <translation>Scadenza</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="108"/>
-        <source>Enter date</source>
-        <translation>Inserisci data</translation>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="67"/>
+        <source>%1 modified to %2</source>
+        <translation>%1 modificata in %2</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="118"/>
-        <source>Time:</source>
-        <translation>Orario:</translation>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="130"/>
+        <source>Alarm canceled</source>
+        <translation>Allarme cancellato</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="131"/>
-        <source>Enter time</source>
-        <translation>Inserisci orario</translation>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="135"/>
+        <source>Notification set to %1</source>
+        <translation>Notifica impostata per %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="141"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="147"/>
         <source>Completed:</source>
         <translation>Completata:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="154"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="160"/>
         <source>Not completed</source>
         <translation>Non completata</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="161"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="167"/>
         <source>Created:</source>
         <translation>Creata:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="179"/>
-        <source>Modify</source>
-        <translation>Modifica</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="183"/>
-        <source>%1 modified</source>
-        <translation>%1 modificato</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="187"/>
+        <location filename="../qml/pages/TaskDetailsPage.qml" line="70"/>
         <source>Task %1 exists</source>
         <translation>Attività %1 esiste già</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/TaskDetailsPage.qml" line="190"/>
-        <source>The name field is empty</source>
-        <translation>La casella del nome è vuota</translation>
-    </message>
-</context>
-<context>
-    <name>TimePicker</name>
-    <message>
-        <location filename="../qml/popups/TimePicker.qml" line="270"/>
-        <source>Cancel</source>
-        <translation>Annulla</translation>
-    </message>
-    <message>
-        <location filename="../qml/popups/TimePicker.qml" line="283"/>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/popups/TimePicker.qml" line="315"/>
-        <source>Now</source>
-        <translation>Attuale</translation>
-    </message>
-    <message>
-        <location filename="../qml/popups/TimePicker.qml" line="326"/>
-        <source>Clear</source>
-        <translation>Cancella</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
-        <location filename="../qml/main.qml" line="99"/>
+        <location filename="../qml/main.qml" line="107"/>
         <source>New List</source>
         <translation>Aggiungi Lista</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="104"/>
+        <location filename="../qml/main.qml" line="112"/>
         <source>Edit Lists</source>
         <translation>Modifica Liste</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="109"/>
+        <location filename="../qml/main.qml" line="117"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="114"/>
+        <location filename="../qml/main.qml" line="122"/>
         <source>About</source>
         <translation>Informazioni App</translation>
     </message>
