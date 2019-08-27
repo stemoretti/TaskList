@@ -20,10 +20,11 @@ Popup {
     property string hrsDisplay: selectedDate.getHours()
     property string minutesDisplay: selectedDate.getMinutes()
 
-    x: (parent.width - calendarWidth) / 2
-    y: ((parent.height - calendarHeight) / 2) - 24
+    x: (parent.width - width) / 2
+    y: ((parent.height - height) / 2) - 24
     implicitWidth: calendarWidth
-    implicitHeight: calendarHeight
+    implicitHeight: Math.min(calendarColumn.implicitHeight, calendarHeight)
+
     closePolicy: Popup.CloseOnPressOutside | Popup.CloseOnEscape
     modal: true
     padding: 0
@@ -37,7 +38,7 @@ Popup {
         Rectangle {
             height: 90
             Layout.fillWidth: true
-            Layout.fillHeight: true
+//            Layout.fillHeight: true
             color: primaryColor
             TextInput {
                 text: (hrsDisplay < 10 ? "0" : "") + hrsDisplay + ":" +
