@@ -3,14 +3,15 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.3
 import QtQml.Models 2.12
-import "../ekke/common"
 import "../common"
 import "../popups"
+
+import AppData 1.0
 
 AppStackPage {
     id: root
 
-    property var clist: appData.currentList
+    property var clist: AppData.currentList
     property bool hideCompleted: clist ? clist.hideCompleted : false
     property bool sortList: clist ? clist.sortByDueDate : false
 //    property string ordering: "custom"
@@ -112,7 +113,7 @@ AppStackPage {
     }
 
     Connections {
-        target: appData
+        target: AppData
         onSpeechRecognized: inputField.text = result
     }
 
@@ -121,7 +122,7 @@ AppStackPage {
 
         height: 70
         width: parent.width
-        y: 0 //-appWindow.header.height
+        y: 0
         closePolicy: Popup.CloseOnPressOutside | Popup.CloseOnEscape
         modal: true
         dim: false
@@ -129,7 +130,8 @@ AppStackPage {
 
         background: Rectangle {
             anchors.fill: parent
-            color: primaryColor
+            color: "gray"
+            opacity: 0.4
         }
 
         onAboutToShow: inputField.text = ""
@@ -142,11 +144,14 @@ AppStackPage {
                 color: Material.background
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+
                 RowLayout {
                     anchors.fill: parent
                     spacing: 0
+
                     TextField {
                         id: inputField
+
                         focus: true
                         leftPadding: 10
                         selectByMouse: true
@@ -159,27 +164,35 @@ AppStackPage {
                     }
 
                     ToolButton {
-                        icon.source: inputField.text.length ? "image://icon/clear"
-                                                            : "image://icon/mic"
+                        icon.source: "image://icon/clear"
                         icon.color: Material.foreground
                         focusPolicy: Qt.NoFocus
+                        visible: inputField.displayText.length > 0
                         onClicked: {
-                            if (inputField.text.length > 0)
-                                inputField.text = ""
-                            else
-                                appData.startSpeechRecognizer();
+                            Qt.inputMethod.commit()
+                            inputField.text = ""
                         }
+                        Layout.rightMargin: 0
                     }
                 }
             }
 
             ToolButton {
-                icon.source: "image://icon/send"
+                icon.source: inputField.displayText.length > 0
+                                         ? "image://icon/send"
+                                         : "image://icon/mic"
                 icon.color: textOnPrimary
                 focusPolicy: Qt.NoFocus
+
+                background: Rectangle {
+                    color: Material.primary
+                    radius: height / 2
+                }
+
                 onClicked: {
-                    Qt.inputMethod.commit()
-                    if (inputField.text.length > 0) {
+                    if (inputField.displayText.length > 0) {
+                        Qt.inputMethod.commit()
+                        Qt.inputMethod.hide()
                         if (clist.newTask(inputField.text)) {
                             showToast(qsTr("Added %1 to list").arg(inputField.text))
                             inputField.text = ""
@@ -187,7 +200,7 @@ AppStackPage {
                             showError(qsTr("%1 is already in list").arg(inputField.text))
                         }
                     } else {
-                        showError(qsTr("Input field is empty"))
+                        AppData.startSpeechRecognizer();
                     }
                 }
             }

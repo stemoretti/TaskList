@@ -8,8 +8,6 @@ SortFilterModel::SortFilterModel(QObject *parent)
     , m_hideCompleted(false)
 {
     sort(0);
-    connect(this, &SortFilterModel::hideCompletedChanged,
-            this, &SortFilterModel::invalidate);
 }
 
 bool SortFilterModel::filterAcceptsRow(int sourceRow,
@@ -26,8 +24,8 @@ bool SortFilterModel::lessThan(const QModelIndex &source_left,
                                const QModelIndex &source_right) const
 {
     auto m = static_cast<QQmlObjectListModel<Task>*>(sourceModel());
-    auto left = m->at(source_left.row());
-    auto right = m->at(source_right.row());
+    Task *left = m->at(source_left.row());
+    Task *right = m->at(source_right.row());
     return QDateTime(left->dueDate(), left->dueTime())
             < QDateTime(right->dueDate(), right->dueTime());
 }
@@ -44,4 +42,5 @@ void SortFilterModel::setHideCompleted(bool hideCompleted)
 
     m_hideCompleted = hideCompleted;
     emit hideCompletedChanged(m_hideCompleted);
+    invalidate();
 }

@@ -14,8 +14,7 @@ List::List(const QString &name, QObject *parent)
     m_tasks = new QQmlObjectListModel<Task>(this);
     m_sortedList = new SortFilterModel(this);
     m_sortedList->setSourceModel(m_tasks);
-    connect(this, &List::hideCompletedChanged,
-            m_sortedList, &SortFilterModel::setHideCompleted);
+    connect(this, &List::hideCompletedChanged, m_sortedList, &SortFilterModel::setHideCompleted);
 }
 
 List *List::fromJson(const QJsonObject &json)
@@ -52,12 +51,10 @@ Task *List::findTask(const QString &name) const
 
 void List::addTask(Task *task)
 {
-    connect(task, &Task::checkedChanged,
-            this, [=] (bool checked) {
+    connect(task, &Task::checkedChanged, this, [this](bool checked) {
         setCompletedTasks(completedTasks() + (checked ? 1 : -1));
     });
-    connect(task, &Task::destroyed,
-            this, [=] (QObject *obj) {
+    connect(task, &Task::destroyed, this, [this](QObject *obj) {
         auto task = static_cast<Task*>(obj);
         if (task->checked())
             setCompletedTasks(completedTasks() - 1);
@@ -107,7 +104,7 @@ void List::removeAll() const
 
 void List::removeTask(const QString &name) const
 {
-    auto task = findTask(name);
+    Task *task = findTask(name);
     if (task)
         m_tasks->remove(task);
 }

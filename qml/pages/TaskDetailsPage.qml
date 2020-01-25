@@ -4,10 +4,10 @@ import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.3
 import QtQml 2.12
 import Task 1.0
-import "../ekke/common"
-import "../ekke/popups"
 import "../common"
 import "../popups"
+
+import AppData 1.0
 
 AppStackPage {
     property var task
@@ -16,7 +16,7 @@ AppStackPage {
     padding: 6
 
     Connections {
-        target: appData
+        target: AppData
         onSpeechRecognized: nameField.text = result
     }
 
@@ -56,21 +56,26 @@ AppStackPage {
                         }
                     }
                     ToolButton {
-                        icon.source: nameField.text.length > 0 && nameField.text !== task.name ? "image://icon/check" : "image://icon/mic"
+                        icon.source: nameField.displayText.length > 0
+                                     && nameField.displayText !== task.name ?
+                                         "image://icon/check" :
+                                         "image://icon/mic"
                         icon.color: Material.foreground
                         focusPolicy: Qt.NoFocus
                         onClicked: {
                             nameField.focus = false
-                            if (nameField.text.length > 0 && nameField.text !== task.name) {
+                            if (nameField.displayText.length > 0
+                                    && nameField.displayText !== task.name) {
+                                Qt.inputMethod.commit()
                                 var tmp = task.name
-                                if (appData.currentList.modifyTask(task, nameField.text)) {
+                                if (AppData.currentList.modifyTask(task, nameField.text)) {
                                     showToast(qsTr("%1 modified to %2").arg(tmp).arg(task.name))
                                     console.log(tmp + " modified to " + task.name)
                                 } else {
                                     showError(qsTr("Task %1 exists").arg(nameField.text))
                                 }
                             } else {
-                                appData.startSpeechRecognizer();
+                                AppData.startSpeechRecognizer();
                             }
                         }
                     }
@@ -108,16 +113,37 @@ AppStackPage {
                     text: qsTr("Due date")
                 }
 
-                ItemDelegate {
-                    property string date: dateTimeString(makeDate(task.dueDate, task.dueTime))
-                    icon.source: "image://icon/access_time"
-                    text: date.length ? date : "Set date"
-                    onClicked: {
-                        if (date.length)
-                            datePicker.selectedDate = makeDate(task.dueDate, task.dueTime)
-                        datePicker.open()
-                    }
+                RowLayout {
                     Layout.fillWidth: true
+
+                    ItemDelegate {
+                        id: dateSelection
+
+                        property string date: dateTimeString(makeDate(task.dueDate, task.dueTime))
+
+                        icon.source: "image://icon/access_time"
+                        text: date.length ? date : "Set date"
+                        onClicked: {
+                            if (date.length)
+                                datePicker.selectedDate = makeDate(task.dueDate, task.dueTime)
+                            datePicker.open()
+                        }
+                        Layout.fillWidth: true
+                    }
+
+                    Button {
+                        icon.source: "image://icon/cancel"
+                        background: null
+                        visible: dateSelection.date.length > 0
+                        onClicked: {
+                            task.dueDate = ""
+                            task.dueTime = ""
+                            if (task.alarm) {
+                                task.alarm = Task.NoAlarm
+                                AppData.cancelAlarm(task.id)
+                            }
+                        }
+                    }
                 }
 
                 ItemDelegate {
@@ -128,12 +154,12 @@ AppStackPage {
                         if (task.alarm) {
                             task.alarm = Task.NoAlarm
                             appWindow.showToast(qsTr("Alarm canceled"))
-                            appData.cancelAlarm(task.id)
+                            AppData.cancelAlarm(task.id)
                         } else {
                             var datetime = makeDate(task.dueDate, task.dueTime)
                             task.alarm = Task.Notification
                             appWindow.showToast(qsTr("Notification set to %1").arg(dateTimeString(datetime)))
-                            appData.setAlarm(task.id, datetime.getTime(), task.name)
+                            AppData.setAlarm(task.id, datetime.getTime(), task.name)
                         }
                     }
                     Layout.fillWidth: true
@@ -190,14 +216,7 @@ AppStackPage {
                 task.dueDate = datetime
                 task.dueTime = datetime
                 if (task.alarm) {
-                    appData.setAlarm(task.id, datetime.getTime(), task.name)
-                }
-            } else if (clear) {
-                task.dueDate = ""
-                task.dueTime = ""
-                if (task.alarm) {
-                    task.alarm = Task.NoAlarm
-                    appData.cancelAlarm(task.id)
+                    AppData.setAlarm(task.id, datetime.getTime(), task.name)
                 }
             }
         }

@@ -1,20 +1,21 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.5
-import "../ekke/common"
 import "../common"
 import "../languages.js" as JS
+
+import Settings 1.0
 
 AppStackPage {
     property int continent: 0
 
+    function back() {
+        return StackView.view.replace(Qt.resolvedUrl("SettingsContinentsPage.qml"),
+                                      StackView.PopTransition)
+    }
+
     title: qsTr("Countries")
     padding: 0
-
-    leftButton: Action {
-        icon.source: "image://icon/arrow_back"
-        onTriggered: replace(Qt.resolvedUrl("SettingsContinentsPage.qml"), StackView.PopTransition)
-    }
 
     ListView {
         anchors.fill: parent
@@ -33,7 +34,7 @@ AppStackPage {
                 }
             }
             onClicked: {
-                appSettings.country = modelData
+                Settings.country = modelData
                 pop()
             }
         }

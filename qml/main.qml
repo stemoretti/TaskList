@@ -3,15 +3,15 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.3
 import "common"
-import "ekke/common"
-import "pages"
+
+import AppData 1.0
 
 App {
     id: appWindow
 
     title: "TaskList"
     header: pageStack.currentItem.appToolBar
-    width: 360
+    width: 640
     height: 480
 
     function makeDate(date, time) {
@@ -24,7 +24,7 @@ App {
     StackView {
         id: pageStack
         anchors.fill: parent
-        initialItem: ListPage { }
+        initialItem: Qt.resolvedUrl("pages/ListPage.qml")
         onCurrentItemChanged: {
             if (currentItem) {
                 currentItem.canNavigateBack = depth > 1
@@ -72,7 +72,7 @@ App {
                 }
 
                 Repeater {
-                    model: appData.lists
+                    model: AppData.lists
                     delegate: ItemDelegate {
                         Layout.fillWidth: true
                         contentItem: RowLayout {
@@ -90,7 +90,7 @@ App {
                             }
                         }
                         onClicked: {
-                            appData.selectList(model.name)
+                            AppData.selectList(model.name)
                             navDrawer.close()
                         }
                     }

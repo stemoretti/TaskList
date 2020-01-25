@@ -28,18 +28,23 @@ public:
 
     Q_INVOKABLE
     Task *findTask(const QString &name) const;
+
     void addTask(Task *task);
 
     //{{{ Properties getters/setters declarations
 
     QString name() const;
     void setName(const QString &name);
+
     int completedTasks() const;
     void setCompletedTasks(int completedTasks);
+
     bool hideCompleted() const;
     void setHideCompleted(bool hideCompleted);
+
     bool sortByDueDate() const;
     void setSortByDueDate(bool sortByDueDate);
+
     SortFilterModel *sortedList() const;
     void setSortedList(SortFilterModel *sortedList);
 

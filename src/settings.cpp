@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QQmlEngine>
 
 #include "system.h"
 
@@ -16,6 +17,7 @@ Settings::Settings(QObject *parent)
     , m_language("en")
     , m_country("en_US")
 {
+    QQmlEngine::setObjectOwnership(this, QQmlEngine::CppOwnership);
     m_settingsFilePath = System::dataPath() + "/settings.json";
 }
 
@@ -24,11 +26,19 @@ Settings::~Settings()
     writeSettingsFile();
 }
 
-Settings &Settings::instance()
+Settings *Settings::instance()
 {
     static Settings instance;
 
-    return instance;
+    return &instance;
+}
+
+QObject *Settings::singletonProvider(QQmlEngine *qmlEngine, QJSEngine *jsEngine)
+{
+    (void)qmlEngine;
+    (void)jsEngine;
+
+    return instance();
 }
 
 void Settings::readSettingsFile()
@@ -55,7 +65,7 @@ void Settings::readSettingsFile()
         qWarning() << "Cannot read JSON file:" << m_settingsFilePath;
         return;
     }
-    auto jobj = jdoc.object();
+    QJsonObject jobj = jdoc.object();
     setDarkTheme(jobj["darkTheme"].toBool());
     setPrimaryColor(jobj["primaryColor"].toString());
     setAccentColor(jobj["accentColor"].toString());

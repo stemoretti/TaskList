@@ -5,6 +5,9 @@
 #include <QColor>
 #include <QString>
 
+class QQmlEngine;
+class QJSEngine;
+
 class Settings : public QObject
 {
     Q_OBJECT
@@ -16,9 +19,10 @@ class Settings : public QObject
     Q_PROPERTY(QString country READ country WRITE setCountry NOTIFY countryChanged)
 
 public:
-    virtual ~Settings();
+    ~Settings();
 
-    static Settings &instance();
+    static Settings *instance();
+    static QObject *singletonProvider(QQmlEngine *qmlEngine, QJSEngine *jsEngine);
 
     void readSettingsFile();
     void writeSettingsFile() const;
@@ -52,8 +56,6 @@ signals:
     void countryChanged(const QString &country);
 
     //}}} Properties signals
-
-public slots:
 
 private:
     explicit Settings(QObject *parent = nullptr);

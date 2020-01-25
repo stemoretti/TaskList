@@ -1,7 +1,9 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.3
-import "../ekke/common"
+import "../common"
+
+import Settings 1.0
 
 Popup {
     property bool selectAccentColor: false
@@ -15,9 +17,11 @@ Popup {
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2 - appToolBar.height / 2
     implicitWidth: appWindow.width * 0.9
-    implicitHeight: appWindow.height * 0.9
+    implicitHeight: Math.min(appWindow.height * 0.9, colorList.contentHeight)
 
     ListView {
+        id: colorList
+
         anchors.fill: parent
         clip: true
         delegate: ItemDelegate {
@@ -48,9 +52,9 @@ Popup {
             }
             onClicked: {
                 if (selectAccentColor)
-                    appSettings.accentColor = Material.color(model.bg)
+                    Settings.accentColor = Material.color(model.bg)
                 else
-                    appSettings.primaryColor = Material.color(model.bg)
+                    Settings.primaryColor = Material.color(model.bg)
                 currentIndex = index
                 close()
             }

@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
+#include <QQmlEngine>
 
 #ifdef Q_OS_ANDROID
 #include <QAndroidJniObject>
@@ -17,6 +18,8 @@ AppData::AppData(QObject *parent)
     : QObject(parent)
     , m_currentList(nullptr)
 {
+    QQmlEngine::setObjectOwnership(this, QQmlEngine::CppOwnership);
+
     m_lists = new QQmlObjectListModel<List>(this);
 
     m_listFilePath = System::dataPath() + "/lists.json";
@@ -32,17 +35,25 @@ AppData::~AppData()
     writeListFile();
 }
 
-AppData &AppData::instance()
+AppData *AppData::instance()
 {
     static AppData instance;
 
-    return instance;
+    return &instance;
+}
+
+QObject *AppData::singletonProvider(QQmlEngine *qmlEngine, QJSEngine *jsEngine)
+{
+    (void)qmlEngine;
+    (void)jsEngine;
+
+    return instance();
 }
 
 bool AppData::checkDirs() const
 {
     QDir myDir;
-    auto path = System::dataPath();
+    QString path = System::dataPath();
 
     if (!myDir.exists(path)) {
         if (!myDir.mkpath(path)) {
@@ -75,10 +86,10 @@ void AppData::readListFile()
         qWarning() << "Cannot read JSON file:" << m_listFilePath;
         return;
     }
-    auto jobj = jdoc.object();
+    QJsonObject jobj = jdoc.object();
     for (const auto o : jobj["lists"].toArray())
         m_lists->append(List::fromJson(o.toObject()));
-    auto curList = jobj["current"];
+    QJsonValue curList = jobj["current"];
     if (!curList.isNull() && !curList.toString().isEmpty())
         selectList(curList.toString());
     UniqueID::setLastUID(jobj["lastUID"].toInt());
@@ -130,16 +141,16 @@ bool AppData::addList(const QString &name) const
 
 void AppData::selectList(const QString &name)
 {
-    auto list = findList(name);
+    List *list = findList(name);
     if (list)
         setCurrentList(list);
 }
 
 void AppData::removeList(const QString &name)
 {
-    auto list = findList(name);
+    List *list = findList(name);
     if (list) {
-        auto index = m_lists->indexOf(list);
+        int index = m_lists->indexOf(list);
         removeList(index);
     }
 }
@@ -163,12 +174,12 @@ Java_com_github_stemoretti_tasklist_MainActivity_sendResult(JNIEnv *env,
                                                             jobject obj,
                                                             jstring text)
 {
-    Q_UNUSED(env);
-    Q_UNUSED(obj);
+    Q_UNUSED(env)
+    Q_UNUSED(obj)
     auto result = QAndroidJniObject(text).toString();
     if (!result.isEmpty()) {
         result[0] = result[0].toUpper();
-        emit AppData::instance().speechRecognized(result);
+        emit AppData::instance()->speechRecognized(result);
     }
 }
 

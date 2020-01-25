@@ -3,8 +3,9 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.5
 import QtQml.Models 2.12
 import QtGraphicalEffects 1.0
-import "../ekke/common"
 import "../common"
+
+import AppData 1.0
 
 AppStackPage {
     id: root
@@ -25,7 +26,7 @@ AppStackPage {
                 listMenu.open()
             }
 
-            onMoveItemRequested: appData.lists.move(from, to)
+            onMoveItemRequested: AppData.lists.move(from, to)
 
             contentItem: ColumnLayout {
                 id: dataColumn
@@ -78,7 +79,7 @@ AppStackPage {
     DelegateModel {
         id: visualModel
 
-        model: appData.lists
+        model: AppData.lists
         delegate: listDelegate
     }
 
@@ -122,7 +123,7 @@ AppStackPage {
         MenuItem {
             text: qsTr("Delete list")
             onTriggered: {
-                appData.removeList(listMenu.list)
+                AppData.removeList(listMenu.list)
             }
         }
     }

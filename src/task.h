@@ -20,10 +20,14 @@ class Task : public QObject
     Q_PROPERTY(QDateTime completed READ completed WRITE setCompleted NOTIFY completedChanged)
 
 public:
-    explicit Task(const QString &name = QString(), int id = 0, QObject *parent = nullptr);
-
-    enum AlarmMode { NoAlarm, Notification, Alarm };
+    enum AlarmMode {
+        NoAlarm,
+        Notification,
+        Alarm
+    };
     Q_ENUM(AlarmMode)
+
+    explicit Task(const QString &name = QString(), int id = 0, QObject *parent = nullptr);
 
     static Task *fromJson(const QJsonObject &json);
     QJsonObject toJson() const;
@@ -73,8 +77,6 @@ signals:
     void completedChanged(const QDateTime &completed);
 
     //}}} Properties signals
-
-public slots:
 
 private:
     //{{{ Properties declarations

@@ -1,12 +1,16 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.5
-import QtQuick.Controls.Material 2.3
-import "../ekke/popups"
+import QtQuick.Window 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Controls.Material 2.12
 import "../popups"
 
+import Settings 1.0
+
 ApplicationWindow {
-    property bool isLandscape: width > height
-    property bool isDarkTheme: appSettings.darkTheme
+    property bool isPortrait: Screen.primaryOrientation === Qt.PortraitOrientation
+                              || Screen.primaryOrientation === Qt.InvertedPortraitOrientation
+    property bool isLandscape: !isPortrait
+    property bool isDarkTheme: Settings.darkTheme
 
     // ui constants
     property color primaryColor: Material.primary
@@ -53,7 +57,7 @@ ApplicationWindow {
     property real opacityBodyAndButton: primaryTextOpacity
     property real opacityBodySecondary: secondaryTextOpacity
     property real opacityCaption: secondaryTextOpacity
-    property var currentLocale: Qt.locale(appSettings.country)
+    property var currentLocale: Qt.locale(Settings.country)
 
     function isDarkColor(color) {
         var a = 1.0 - (0.299 * color.r + 0.587 * color.g + 0.114 * color.b)
@@ -100,9 +104,9 @@ ApplicationWindow {
     visible: true
     locale: Qt.locale("en_US")
 
-    Material.primary: appSettings.primaryColor
-    Material.accent: appSettings.accentColor
-    Material.theme: appSettings.darkTheme ? Material.Dark : Material.Light
+    Material.primary: Settings.primaryColor
+    Material.accent: Settings.accentColor
+    Material.theme: Settings.darkTheme ? Material.Dark : Material.Light
 
     // APP WINDOW POPUPS
     PopupExit {

@@ -2,24 +2,23 @@
     <qresource prefix="/">
         <file>qml/main.qml</file>
         <file>qml/pages/ListPage.qml</file>
-        <file>qml/ekke/common/HorizontalListDivider.qml</file>
-        <file>qml/ekke/common/HorizontalDivider.qml</file>
-        <file>qml/ekke/common/ButtonFlat.qml</file>
-        <file>qml/ekke/common/ButtonRaised.qml</file>
-        <file>qml/ekke/popups/PopupToast.qml</file>
-        <file>qml/ekke/popups/PopupInfo.qml</file>
-        <file>qml/ekke/popups/PopupError.qml</file>
-        <file>qml/ekke/popups/PopupExit.qml</file>
+        <file>qml/common/HorizontalListDivider.qml</file>
+        <file>qml/common/HorizontalDivider.qml</file>
+        <file>qml/common/ButtonFlat.qml</file>
+        <file>qml/common/ButtonRaised.qml</file>
+        <file>qml/popups/PopupToast.qml</file>
+        <file>qml/popups/PopupInfo.qml</file>
+        <file>qml/popups/PopupError.qml</file>
+        <file>qml/popups/PopupExit.qml</file>
         <file>qml/popups/PopupConfirm.qml</file>
-        <file>qml/ekke/common/LabelBody.qml</file>
-        <file>qml/ekke/common/LabelBodySecondary.qml</file>
+        <file>qml/common/LabelBody.qml</file>
+        <file>qml/common/LabelBodySecondary.qml</file>
         <file>qml/pages/SettingsPage.qml</file>
-        <file>qml/ekke/common/LabelSubheading.qml</file>
-        <file>qml/ekke/common/LabelTitle.qml</file>
+        <file>qml/common/LabelSubheading.qml</file>
+        <file>qml/common/LabelTitle.qml</file>
         <file>qml/common/App.qml</file>
         <file>qml/common/AppStackPage.qml</file>
         <file>qml/common/AppToolBar.qml</file>
-        <file>qml/common/ColorComboBox.qml</file>
         <file>qml/languages.js</file>
         <file>qml/pages/NewListPage.qml</file>
         <file>qml/pages/EditListsPage.qml</file>
@@ -32,7 +31,6 @@
         <file>qml/pages/TaskDetailsPage.qml</file>
         <file>qml/pages/DragDropListView.qml</file>
         <file>qml/pages/SortedListView.qml</file>
-        <file>qml/pages/AddTaskPage.qml</file>
         <file>qml/pages/SettingsContinentsPage.qml</file>
         <file>qml/pages/SettingsCountriesPage.qml</file>
     </qresource>

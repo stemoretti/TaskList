@@ -5,6 +5,9 @@
 #include "QQmlObjectListModel.h"
 #include "list.h"
 
+class QQmlEngine;
+class QJSEngine;
+
 class Task;
 
 class AppData : public QObject
@@ -15,9 +18,10 @@ class AppData : public QObject
     Q_PROPERTY(List *currentList READ currentList NOTIFY currentListChanged)
 
 public:
-    virtual ~AppData();
+    ~AppData();
 
-    static AppData &instance();
+    static AppData *instance();
+    static QObject *singletonProvider(QQmlEngine *qmlEngine, QJSEngine *jsEngine);
 
     bool checkDirs() const;
 

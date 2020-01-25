@@ -1,7 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.5
-import "../ekke/common"
 import "../common"
 
 AppStackPage {
@@ -43,7 +42,7 @@ AppStackPage {
                 }
 
                 LabelBody {
-                    text: "Qt 5.12.3\n"
+                    text: "Qt 5.12.3<br>"
                           + "Copyright 2008-2019 The Qt Company Ltd."
                           + " All rights reserved."
                           + " Qt is under the LGPLv3 license."

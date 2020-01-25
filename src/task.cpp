@@ -8,8 +8,7 @@ Task::Task(const QString &name, int id, QObject *parent)
     , m_created(QDateTime::currentDateTime())
     , m_alarm(AlarmMode::NoAlarm)
 {
-    connect(this, &Task::checkedChanged,
-            this, [=] (bool checked) {
+    connect(this, &Task::checkedChanged, this, [this](bool checked) {
         if (checked)
             setCompleted(QDateTime::currentDateTime());
         else

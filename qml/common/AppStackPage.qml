@@ -2,7 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.5
 
 Page {
-    id: page
+    id: root
 
     property bool canNavigateBack: false
     property alias appToolBar: appToolBar
@@ -10,10 +10,14 @@ Page {
     property alias rightButtons: appToolBar.rightButtons
 
     function pop(item, operation) {
-        if (StackView.view.currentItem !== page)
+        if (StackView.view.currentItem !== root)
             return false
 
         return StackView.view.pop(item, operation)
+    }
+
+    function back() {
+        pop()
     }
 
     function push(item, properties, operation) {
@@ -23,7 +27,7 @@ Page {
     Keys.onBackPressed: {
         if (StackView.view.depth > 1) {
             event.accepted = true
-            pop()
+            back()
         } else {
             Qt.quit()
         }
@@ -32,12 +36,12 @@ Page {
     Action {
         id: backAction
         icon.source: "image://icon/arrow_back"
-        onTriggered: page.pop()
+        onTriggered: root.back()
     }
 
     AppToolBar {
         id: appToolBar
-        title: page.title
+        title: root.title
         leftButton: canNavigateBack ? backAction : null
     }
 }

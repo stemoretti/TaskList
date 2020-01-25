@@ -1,12 +1,11 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.5
-import "../ekke/common"
 import "../common"
 
-AppStackPage {
-    function resetFocus() { nameField.focus = false }
+import AppData 1.0
 
+AppStackPage {
     title: qsTr("Add New List")
     padding: 6
 
@@ -49,12 +48,13 @@ AppStackPage {
                     text: qsTr("Add List")
 
                     onClicked: {
-                        if (nameField.length > 0) {
-                            if (appData.addList(nameField.text)) {
-                                appData.selectList(nameField.text)
+                        if (nameField.displayText.length > 0) {
+                            Qt.inputMethod.commit()
+                            if (AppData.addList(nameField.text)) {
+                                AppData.selectList(nameField.text)
                                 showToast(qsTr("Created list %1").arg(nameField.text))
                                 nameField.text = ""
-                                resetFocus()
+                                nameField.focus = false
                             } else {
                                 showError(qsTr("List %1 exists").arg(nameField.text))
                             }

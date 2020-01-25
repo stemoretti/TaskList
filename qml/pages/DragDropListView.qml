@@ -4,14 +4,15 @@ import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.3
 import QtQml.Models 2.12
 import QtGraphicalEffects 1.0
-import "../ekke/common"
 import "../common"
 import "../popups"
+
+import AppData 1.0
 
 Item {
     id: root
 
-    property var clist: appData.currentList
+    property var clist: AppData.currentList
     property bool hideCompleted: clist ? clist.hideCompleted : false
 
     Component {
