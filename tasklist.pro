@@ -96,6 +96,10 @@ android {
         android/AndroidManifest.xml \
         android/res/values/libs.xml \
         android/build.gradle \
+        android/gradle/wrapper/gradle-wrapper.jar \
+        android/gradle/wrapper/gradle-wrapper.properties \
+        android/gradlew \
+        android/gradlew.bat \
         android/src/com/github/stemoretti/tasklist/MainActivity.java \
         android/src/com/github/stemoretti/tasklist/Alarm.java
 }
