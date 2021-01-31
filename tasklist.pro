@@ -24,7 +24,6 @@ SOURCES += \
     src/appdata.cpp \
     src/system.cpp \
     src/task.cpp \
-    src/iconprovider.cpp \
     src/sortfiltermodel.cpp \
     src/uniqueid.cpp
 
