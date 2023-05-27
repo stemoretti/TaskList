@@ -2,80 +2,58 @@
 #define APPDATA_H
 
 #include <QObject>
-#include "QQmlObjectListModel.h"
+
+#include <QtQml/qqmlregistration.h>
+
+#include <QQmlObjectListModel.h>
+
 #include "list.h"
 
 class QQmlEngine;
 class QJSEngine;
 
-class Task;
-
 class AppData : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_SINGLETON
 
     QML_OBJMODEL_PROPERTY(lists, List)
     Q_PROPERTY(List *currentList READ currentList NOTIFY currentListChanged)
+    Q_PROPERTY(bool drawerEnabled MEMBER m_drawerEnabled NOTIFY drawerEnabledChanged)
 
 public:
     ~AppData();
 
-    static AppData *instance();
-    static QObject *singletonProvider(QQmlEngine *qmlEngine, QJSEngine *jsEngine);
+    inline static AppData *instance;
+    static void init(QObject *parent = nullptr) { instance = new AppData(parent); }
+    static AppData *create(QQmlEngine *, QJSEngine *) { return instance; }
 
-    bool checkDirs() const;
+    Q_INVOKABLE void readListFile(const QString &path = QString());
+    Q_INVOKABLE void writeListFile(const QString &path = QString()) const;
 
-    void readListFile();
-    void writeListFile() const;
+    int findList(const QString &name) const;
 
-    List *findList(const QString &name) const;
-
-#ifdef Q_OS_ANDROID
-    Q_INVOKABLE
-    void startSpeechRecognizer() const;
-
-    Q_INVOKABLE
-    void setAlarm(int id, long long time, const QString &task) const;
-
-    Q_INVOKABLE
-    void cancelAlarm(int id) const;
-#endif
-
-    //{{{ Properties getters/setters declarations
+    Q_INVOKABLE bool addList(const QString &name) const;
+    Q_INVOKABLE void selectList(const QString &name);
+    Q_INVOKABLE void removeList(const QString &name);
+    Q_INVOKABLE void removeList(int index);
 
     List *currentList() const;
     void setCurrentList(List *currentList);
 
-    //}}} Properties getters/setters declarations
-
-signals:
-#ifdef Q_OS_ANDROID
-    void speechRecognized(const QString &result);
-#endif
-
-    //{{{ Properties signals
-
-    void currentListChanged(List * currentList);
-
-    //}}} Properties signals
-
-public slots:
-    bool addList(const QString &name) const;
-    void selectList(const QString &name);
-    void removeList(const QString &name);
-    void removeList(int index);
+Q_SIGNALS:
+    void currentListChanged(List *currentList);
+    void drawerEnabledChanged(bool drawerEnabled);
 
 private:
     explicit AppData(QObject *parent = nullptr);
-    Q_DISABLE_COPY(AppData)
+    Q_DISABLE_COPY_MOVE(AppData)
 
     QString m_listFilePath;
 
-    //{{{ Properties declarations
-
     List *m_currentList;
-
-    //}}} Properties declarations
+    bool m_drawerEnabled;
 };
 
 #endif // APPDATA_H

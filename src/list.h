@@ -2,83 +2,97 @@
 #define LIST_H
 
 #include <QObject>
-#include <QSortFilterProxyModel>
 
-#include "QQmlObjectListModel.h"
+#include <QtQml/qqmlregistration.h>
+
+#include <QQmlObjectListModel.h>
+
 #include "sortfiltermodel.h"
-
-class Task;
+#include "task.h"
 
 class List : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_UNCREATABLE("")
 
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
-    QML_OBJMODEL_PROPERTY(tasks, Task)
-    Q_PROPERTY(int completedTasks READ completedTasks WRITE setCompletedTasks NOTIFY completedTasksChanged)
+    Q_PROPERTY(int tasksCount READ tasksCount NOTIFY tasksCountChanged)
+    Q_PROPERTY(int completedTasksCount READ completedTasksCount NOTIFY completedTasksCountChanged)
     Q_PROPERTY(bool hideCompleted READ hideCompleted WRITE setHideCompleted NOTIFY hideCompletedChanged)
-    Q_PROPERTY(bool sortByDueDate READ sortByDueDate WRITE setSortByDueDate NOTIFY sortByDueDateChanged)
-    Q_PROPERTY(SortFilterModel *sortedList READ sortedList NOTIFY sortedListChanged)
+    Q_PROPERTY(Order ordering READ ordering WRITE setOrdering NOTIFY orderingChanged)
+
+    QML_OBJMODEL_PROPERTY(visualModel, Task)
+    QML_OBJMODEL_PROPERTY(searchModel, Task)
+    Q_PROPERTY(SortFilterModel *visualModelSorted READ visualModelSorted CONSTANT)
 
 public:
+    enum Order {
+        UserReorder,
+        AlphabeticalInc,
+        AlphabeticalDec,
+        CreatedInc,
+        CreatedDec,
+        DueInc,
+        DueDec,
+        CompletedInc,
+        CompletedDec
+    };
+    Q_ENUM(Order)
+
     explicit List(const QString &name, QObject *parent = nullptr);
 
     static List *fromJson(const QJsonObject &json);
     QJsonObject toJson() const;
 
-    Q_INVOKABLE
-    Task *findTask(const QString &name) const;
-
     void addTask(Task *task);
 
-    //{{{ Properties getters/setters declarations
+    Q_INVOKABLE Task *findTask(const QString &name) const;
+    Q_INVOKABLE bool newTask(const QString &name);
+    Q_INVOKABLE bool moveTask(int from, int to);
+    Q_INVOKABLE void removeCompleted();
+    Q_INVOKABLE void removeAll();
+    Q_INVOKABLE void removeTask(QObject *obj);
+    Q_INVOKABLE void removeTask(int id);
+    Q_INVOKABLE void removeTask(const QString &name);
+    Q_INVOKABLE bool renameTask(QObject *obj, const QString &name) const;
+    Q_INVOKABLE void completeAll() const;
+    Q_INVOKABLE void uncompleteAll() const;
+
+    Q_INVOKABLE void filterTasks(const QString &term);
 
     QString name() const;
     void setName(const QString &name);
 
-    int completedTasks() const;
-    void setCompletedTasks(int completedTasks);
+    int tasksCount() const;
+
+    int completedTasksCount() const;
 
     bool hideCompleted() const;
     void setHideCompleted(bool hideCompleted);
 
-    bool sortByDueDate() const;
-    void setSortByDueDate(bool sortByDueDate);
+    Order ordering() const;
+    void setOrdering(Order ordering);
 
-    SortFilterModel *sortedList() const;
-    void setSortedList(SortFilterModel *sortedList);
+    SortFilterModel *visualModelSorted() const;
 
-    //}}} Properties getters/setters declarations
-
-signals:
-    //{{{ Properties signals
-
-    void nameChanged(QString name);
-    void completedTasksChanged(int completedTasks);
+Q_SIGNALS:
+    void nameChanged(const QString &name);
+    void tasksCountChanged(int tasksCount);
+    void completedTasksCountChanged(int completedTasksCount);
     void hideCompletedChanged(bool hideCompleted);
-    void sortByDueDateChanged(bool sortByDueDate);
-    void sortedListChanged(SortFilterModel *sortedList);
-
-    //}}} Properties signals
-
-public slots:
-    bool newTask(const QString &name);
-    void removeChecked() const;
-    void removeAll() const;
-    void removeTask(const QString &name) const;
-    bool modifyTask(QObject *obj, const QString &name) const;
-    bool moveTask(int from, int to) const;
+    void orderingChanged(Order ordering);
 
 private:
-    //{{{ Properties declarations
+    void setCompletedTasksCount(int completedTasksCount);
 
     QString m_name;
-    int m_completedTasks;
+    int m_completedTasksCount;
     bool m_hideCompleted;
-    bool m_sortByDueDate;
-    SortFilterModel *m_sortedList;
+    Order m_ordering;
 
-    //}}} Properties declarations
+    QList<Task *> m_tasks;
+    SortFilterModel *m_visualModelSorted;
 };
 
 #endif // LIST_H

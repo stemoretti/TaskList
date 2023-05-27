@@ -5,29 +5,19 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QQmlEngine>
-
-#ifdef Q_OS_ANDROID
-#include <QAndroidJniObject>
-#include <QtAndroid>
-#endif
+#include <QUrl>
 
 #include "system.h"
 #include "uniqueid.h"
 
 AppData::AppData(QObject *parent)
     : QObject(parent)
+    , m_lists(new QQmlObjectListModel<List>(this))
+    , m_listFilePath(System::dataPath() + "/lists.json")
     , m_currentList(nullptr)
+    , m_drawerEnabled(true)
 {
     QQmlEngine::setObjectOwnership(this, QQmlEngine::CppOwnership);
-
-    m_lists = new QQmlObjectListModel<List>(this);
-
-    m_listFilePath = System::dataPath() + "/lists.json";
-    qDebug() << m_listFilePath;
-
-    if (!checkDirs())
-        qFatal("App won't work - cannot create data directory.");
-    readListFile();
 }
 
 AppData::~AppData()
@@ -35,45 +25,18 @@ AppData::~AppData()
     writeListFile();
 }
 
-AppData *AppData::instance()
+void AppData::readListFile(const QString &path)
 {
-    static AppData instance;
+#ifdef Q_OS_ANDROID
+    QFile readFile(path.isEmpty() ? m_listFilePath : path);
+#else
+    QFile readFile(path.isEmpty() ? m_listFilePath : QUrl(path).toLocalFile());
+#endif
 
-    return &instance;
-}
-
-QObject *AppData::singletonProvider(QQmlEngine *qmlEngine, QJSEngine *jsEngine)
-{
-    (void)qmlEngine;
-    (void)jsEngine;
-
-    return instance();
-}
-
-bool AppData::checkDirs() const
-{
-    QDir myDir;
-    QString path = System::dataPath();
-
-    if (!myDir.exists(path)) {
-        if (!myDir.mkpath(path)) {
-            qWarning() << "Cannot create" << path;
-            return false;
-        }
-        qDebug() << "Created directory" << path;
-    }
-
-    return true;
-}
-
-void AppData::readListFile()
-{
-    qDebug() << "Read the list database";
-
-    QFile readFile(m_listFilePath);
+    qDebug() << "Read the list database" << readFile.fileName();
 
     if (!readFile.exists()) {
-        qWarning() << "List cache doesn't exist:" << m_listFilePath;
+        qWarning() << "List cache doesn't exist:" << path;
         return;
     }
     if (!readFile.open(QIODevice::ReadOnly)) {
@@ -81,11 +44,12 @@ void AppData::readListFile()
         return;
     }
     auto jdoc = QJsonDocument::fromJson(readFile.readAll());
-    readFile.close();
     if (!jdoc.isObject()) {
         qWarning() << "Cannot read JSON file:" << m_listFilePath;
+        qWarning() << readFile.errorString();
         return;
     }
+    readFile.close();
     QJsonObject jobj = jdoc.object();
     for (const auto o : jobj["lists"].toArray())
         m_lists->append(List::fromJson(o.toObject()));
@@ -98,14 +62,14 @@ void AppData::readListFile()
     qDebug() << "List database read";
 }
 
-void AppData::writeListFile() const
+void AppData::writeListFile(const QString &path) const
 {
     qDebug() << "Write the list file";
 
-    QFile writeFile(m_listFilePath);
+    QFile writeFile(path.isEmpty() ? m_listFilePath : path);
 
     if (!writeFile.open(QIODevice::WriteOnly)) {
-        qWarning() << "Cannot open file:" << m_listFilePath;
+        qWarning() << "Cannot open file:" << writeFile.fileName();
         return;
     }
     QJsonObject jobj;
@@ -121,18 +85,18 @@ void AppData::writeListFile() const
     qDebug() << "List saved";
 }
 
-List *AppData::findList(const QString &name) const
+int AppData::findList(const QString &name) const
 {
-    for (const auto &list : m_lists->toList()) {
-        if (list->name() == name)
-            return list;
+    for (int i = 0; i < m_lists->count(); i++) {
+        if (m_lists->at(i)->name() == name)
+            return i;
     }
-    return nullptr;
+    return -1;
 }
 
 bool AppData::addList(const QString &name) const
 {
-    if (findList(name))
+    if (findList(name) >= 0)
         return false;
     m_lists->append(new List(name));
 
@@ -141,68 +105,34 @@ bool AppData::addList(const QString &name) const
 
 void AppData::selectList(const QString &name)
 {
-    List *list = findList(name);
-    if (list)
-        setCurrentList(list);
+    int i = findList(name);
+    if (i >= 0)
+        setCurrentList(m_lists->at(i));
 }
 
 void AppData::removeList(const QString &name)
 {
-    List *list = findList(name);
-    if (list) {
-        int index = m_lists->indexOf(list);
-        removeList(index);
-    }
+    int i = findList(name);
+    if (i >= 0)
+        removeList(i);
 }
 
 void AppData::removeList(int index)
 {
     if (index >= 0 && index < m_lists->count()) {
-        m_lists->remove(index);
-        if (index > 0 && index >= m_lists->count())
-            index--;
-        if (m_lists->count())
-            setCurrentList(m_lists->at(index));
-        else
-            setCurrentList(nullptr);
+        if (m_lists->indexOf(currentList()) == index) {
+            m_lists->remove(index);
+            if (index < m_lists->count())
+                setCurrentList(m_lists->at(index));
+            else if (m_lists->count())
+                setCurrentList(m_lists->at(m_lists->count() - 1));
+            else
+                setCurrentList(nullptr);
+        } else {
+            m_lists->remove(index);
+        }
     }
 }
-
-#ifdef Q_OS_ANDROID
-extern "C" JNIEXPORT void JNICALL
-Java_com_github_stemoretti_tasklist_MainActivity_sendResult(JNIEnv *env,
-                                                            jobject obj,
-                                                            jstring text)
-{
-    Q_UNUSED(env)
-    Q_UNUSED(obj)
-    auto result = QAndroidJniObject(text).toString();
-    if (!result.isEmpty()) {
-        result[0] = result[0].toUpper();
-        emit AppData::instance()->speechRecognized(result);
-    }
-}
-
-void AppData::startSpeechRecognizer() const
-{
-    QtAndroid::androidActivity().callMethod<void>("getSpeechInput", "()V");
-}
-
-void AppData::setAlarm(int id, long long time, const QString &task) const
-{
-    auto javaString = QAndroidJniObject::fromString(task);
-    QtAndroid::androidActivity().callMethod<void>("setAlarm",
-                                                  "(IJLjava/lang/String;)V",
-                                                  id, time, javaString.object());
-}
-
-void AppData::cancelAlarm(int id) const
-{
-    QtAndroid::androidActivity().callMethod<void>("cancelAlarm", "(I)V", id);
-}
-#endif
-
-//{{{ Properties getters/setters definitions
 
 List *AppData::currentList() const
 {
@@ -215,7 +145,5 @@ void AppData::setCurrentList(List *currentList)
         return;
 
     m_currentList = currentList;
-    emit currentListChanged(m_currentList);
+    Q_EMIT currentListChanged(m_currentList);
 }
-
-//}}} Properties getters/setters definitions

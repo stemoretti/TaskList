@@ -1,46 +1,83 @@
 #include "sortfiltermodel.h"
 
-#include "QQmlObjectListModel.h"
+#include <QQmlObjectListModel.h>
+
 #include "task.h"
+
+static bool dateTimeInc(const QString &left, const QString &right)
+{
+    if (left.isNull())
+        return false;
+    if (right.isNull())
+        return true;
+    return QDateTime::fromString(left, Qt::ISODate) < QDateTime::fromString(right, Qt::ISODate);
+}
+
+static bool dateTimeDec(const QString &left, const QString &right)
+{
+    if (left.isNull())
+        return false;
+    if (right.isNull())
+        return true;
+    return QDateTime::fromString(left, Qt::ISODate) > QDateTime::fromString(right, Qt::ISODate);
+}
 
 SortFilterModel::SortFilterModel(QObject *parent)
     : QSortFilterProxyModel(parent)
-    , m_hideCompleted(false)
+    , m_sortFunc(dueDec)
 {
     sort(0);
-}
-
-bool SortFilterModel::filterAcceptsRow(int sourceRow,
-                                       const QModelIndex &sourceParent) const
-{
-    Q_UNUSED(sourceParent)
-    auto m = static_cast<QQmlObjectListModel<Task>*>(sourceModel());
-    if (hideCompleted())
-        return !m->at(sourceRow)->checked();
-    return true;
 }
 
 bool SortFilterModel::lessThan(const QModelIndex &source_left,
                                const QModelIndex &source_right) const
 {
-    auto m = static_cast<QQmlObjectListModel<Task>*>(sourceModel());
-    Task *left = m->at(source_left.row());
-    Task *right = m->at(source_right.row());
-    return QDateTime(left->dueDate(), left->dueTime())
-            < QDateTime(right->dueDate(), right->dueTime());
+    auto tasks = static_cast<QQmlObjectListModel<Task> *>(sourceModel());
+    return m_sortFunc(tasks->at(source_left.row()), tasks->at(source_right.row()));
 }
 
-bool SortFilterModel::hideCompleted() const
+void SortFilterModel::setCompareFunction(std::function<sortFunc> func)
 {
-    return m_hideCompleted;
-}
-
-void SortFilterModel::setHideCompleted(bool hideCompleted)
-{
-    if (hideCompleted == m_hideCompleted)
-        return;
-
-    m_hideCompleted = hideCompleted;
-    emit hideCompletedChanged(m_hideCompleted);
+    m_sortFunc = func;
     invalidate();
+}
+
+bool alphabeticalInc(const Task *left, const Task *right)
+{
+    return left->name().compare(right->name(), Qt::CaseInsensitive) < 0;
+}
+
+bool alphabeticalDec(const Task *left, const Task *right)
+{
+    return left->name().compare(right->name(), Qt::CaseInsensitive) > 0;
+}
+
+bool createdInc(const Task *left, const Task *right)
+{
+    return dateTimeInc(left->createdDateTime(), right->createdDateTime());
+}
+
+bool createdDec(const Task *left, const Task *right)
+{
+    return dateTimeDec(left->createdDateTime(), right->createdDateTime());
+}
+
+bool dueInc(const Task *left, const Task *right)
+{
+    return dateTimeInc(left->dueDateTime(), right->dueDateTime());
+}
+
+bool dueDec(const Task *left, const Task *right)
+{
+    return dateTimeDec(left->dueDateTime(), right->dueDateTime());
+}
+
+bool completedInc(const Task *left, const Task *right)
+{
+    return dateTimeInc(left->completedDateTime(), right->completedDateTime());
+}
+
+bool completedDec(const Task *left, const Task *right)
+{
+    return dateTimeDec(left->completedDateTime(), right->completedDateTime());
 }

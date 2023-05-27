@@ -1,34 +1,34 @@
 #include "task.h"
 
+#include <QString>
+
 Task::Task(const QString &name, int id, QObject *parent)
     : QObject(parent)
     , m_id(id)
     , m_name(name)
-    , m_checked(false)
+    , m_allDay(false)
+    , m_reminder(Reminder::Off)
+    , m_reminderType(ReminderType::Notification)
+    , m_repeat(Repeat::Off)
     , m_created(QDateTime::currentDateTime())
-    , m_alarm(AlarmMode::NoAlarm)
 {
-    connect(this, &Task::checkedChanged, this, [this](bool checked) {
-        if (checked)
-            setCompleted(QDateTime::currentDateTime());
-        else
-            setCompleted(QDateTime());
-    });
 }
 
 Task *Task::fromJson(const QJsonObject &json)
 {
-    auto c = new Task;
-    c->setId(json["id"].toInt());
-    c->setName(json["name"].toString());
-    c->setChecked(json["checked"].toBool());
-    c->setCreated(QDateTime::fromString(json["created"].toString(), Qt::ISODate));
-    c->setNotes(json["notes"].toString());
-    c->setDueDate(QDate::fromString(json["dueDate"].toString(), "yyyy-MM-dd"));
-    c->setDueTime(QTime::fromString(json["dueTime"].toString(), "hh:mm:ss"));
-    c->setAlarm(AlarmMode(json["alarm"].toInt()));
-    c->setCompleted(QDateTime::fromString(json["completed"].toString(), Qt::ISODate));
-    return c;
+    Task *task = new Task;
+    task->setId(json["id"].toInt());
+    task->setName(json["name"].toString());
+    task->setNotes(json["notes"].toString());
+    task->setAllDay(json["allDay"].toBool());
+    task->setReminder(Reminder(json["reminder"].toInt()));
+    task->setReminderType(ReminderType(json["reminderType"].toInt()));
+    task->setRepeat(Repeat(json["repeat"].toInt()));
+    task->setCreatedDateTime(json["created"].toString());
+    task->setDueDateTime(json["due"].toString());
+    task->setCompletedDateTime(json["completed"].toString());
+
+    return task;
 }
 
 QJsonObject Task::toJson() const
@@ -36,17 +36,17 @@ QJsonObject Task::toJson() const
     QJsonObject json;
     json["id"] = id();
     json["name"] = name();
-    json["checked"] = checked();
-    json["created"] = created().toString(Qt::ISODate);
     json["notes"] = notes();
-    json["dueDate"] = dueDate().toString("yyyy-MM-dd");
-    json["dueTime"] = dueTime().toString("hh:mm:ss");
-    json["alarm"] = alarm();
-    json["completed"] = completed().toString(Qt::ISODate);
+    json["allDay"] = allDay();
+    json["reminder"] = int(reminder());
+    json["reminderType"] = int(reminderType());
+    json["repeat"] = int(repeat());
+    json["created"] = m_created.toString(Qt::ISODate);
+    json["due"] = m_due.toString(Qt::ISODate);
+    json["completed"] = m_completed.toString(Qt::ISODate);
+
     return json;
 }
-
-//{{{ Properties getters/setters definitions
 
 int Task::id() const
 {
@@ -59,7 +59,7 @@ void Task::setId(int id)
         return;
 
     m_id = id;
-    emit idChanged(m_id);
+    Q_EMIT idChanged(id);
 }
 
 QString Task::name() const
@@ -73,35 +73,21 @@ void Task::setName(const QString &name)
         return;
 
     m_name = name;
-    emit nameChanged(m_name);
+    Q_EMIT nameChanged(name);
 }
 
-bool Task::checked() const
+bool Task::completed() const
 {
-    return m_checked;
+    return m_completed.isValid();
 }
 
-void Task::setChecked(bool checked)
+void Task::setCompleted(bool completed)
 {
-    if (m_checked == checked)
+    if (m_completed.isValid() == completed)
         return;
 
-    m_checked = checked;
-    emit checkedChanged(m_checked);
-}
-
-QDateTime Task::created() const
-{
-    return m_created;
-}
-
-void Task::setCreated(const QDateTime &created)
-{
-    if (m_created == created)
-        return;
-
-    m_created = created;
-    emit createdChanged(m_created);
+    setCompletedDateTime(completed ? QDateTime::currentDateTime().toString(Qt::ISODate) : "");
+    Q_EMIT completedChanged(completed);
 }
 
 QString Task::notes() const
@@ -115,62 +101,121 @@ void Task::setNotes(const QString &notes)
         return;
 
     m_notes = notes;
-    emit notesChanged(m_notes);
+    Q_EMIT notesChanged(notes);
 }
 
-QDate Task::dueDate() const
+bool Task::allDay() const
 {
-    return m_dueDate;
+    return m_allDay;
 }
 
-void Task::setDueDate(const QDate &dueDate)
+void Task::setAllDay(bool allDay)
 {
-    if (m_dueDate == dueDate)
+    if (m_allDay == allDay)
         return;
 
-    m_dueDate = dueDate;
-    emit dueDateChanged(m_dueDate);
+    m_allDay = allDay;
+    Q_EMIT allDayChanged(allDay);
 }
 
-QTime Task::dueTime() const
+Task::Reminder Task::reminder() const
 {
-    return m_dueTime;
+    return m_reminder;
 }
 
-void Task::setDueTime(const QTime &dueTime)
+void Task::setReminder(Reminder reminder)
 {
-    if (m_dueTime == dueTime)
+    if (m_reminder == reminder)
         return;
 
-    m_dueTime = dueTime;
-    emit dueTimeChanged(m_dueTime);
-}
-Task::AlarmMode Task::alarm() const
-{
-    return m_alarm;
+    m_reminder = reminder;
+    Q_EMIT reminderChanged(reminder);
 }
 
-void Task::setAlarm(AlarmMode alarm)
+Task::ReminderType Task::reminderType() const
 {
-    if (m_alarm == alarm)
+    return m_reminderType;
+}
+
+void Task::setReminderType(ReminderType reminderType)
+{
+    if (m_reminderType == reminderType)
         return;
 
-    m_alarm = alarm;
-    emit alarmChanged(m_alarm);
+    m_reminderType = reminderType;
+    Q_EMIT reminderTypeChanged(reminderType);
 }
 
-QDateTime Task::completed() const
+Task::Repeat Task::repeat() const
 {
-    return m_completed;
+    return m_repeat;
 }
 
-void Task::setCompleted(const QDateTime &completed)
+void Task::setRepeat(Repeat repeat)
 {
-    if (m_completed == completed)
+    if (m_repeat == repeat)
         return;
 
-    m_completed = completed;
-    emit completedChanged(m_completed);
+    m_repeat = repeat;
+    Q_EMIT repeatChanged(repeat);
 }
 
-//}}} Properties getters/setters definitions
+QString Task::createdDate() const
+{
+    return m_created.toString("yyyy-MM-dd");
+}
+
+QString Task::createdDateTime() const
+{
+    return m_created.toString(Qt::ISODate);
+}
+
+void Task::setCreatedDateTime(const QString &created)
+{
+    if (m_created.toString(Qt::ISODate) == created)
+        return;
+
+    m_created = QDateTime::fromString(created, Qt::ISODate);
+    Q_EMIT createdDateTimeChanged(createdDateTime());
+    Q_EMIT createdDateChanged(createdDate());
+}
+
+QString Task::dueDate() const
+{
+    return m_due.toString("yyyy-MM-dd");
+}
+
+QString Task::dueDateTime() const
+{
+    return m_due.toString(Qt::ISODate);
+}
+
+void Task::setDueDateTime(const QString &due)
+{
+    if (m_due.toString(Qt::ISODate) == due)
+        return;
+
+    m_due = QDateTime::fromString(due, Qt::ISODate);
+    Q_EMIT dueDateTimeChanged(dueDateTime());
+    Q_EMIT dueDateChanged(dueDate());
+}
+
+QString Task::completedDate() const
+{
+    return m_completed.toString("yyyy-MM-dd");
+}
+
+QString Task::completedDateTime() const
+{
+    return m_completed.toString(Qt::ISODate);
+}
+
+void Task::setCompletedDateTime(const QString &completed)
+{
+    if (m_completed.toString(Qt::ISODate) == completed)
+        return;
+
+    m_completed = QDateTime::fromString(completed, Qt::ISODate);
+    Q_EMIT completedDateTimeChanged(completedDateTime());
+    Q_EMIT completedDateChanged(completedDate());
+}

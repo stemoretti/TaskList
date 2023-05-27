@@ -3,6 +3,12 @@
 
 #include <QSortFilterProxyModel>
 
+#include <functional>
+
+class Task;
+
+using sortFunc = bool(const Task *left, const Task *right);
+
 class SortFilterModel : public QSortFilterProxyModel
 {
     Q_OBJECT
@@ -10,19 +16,22 @@ class SortFilterModel : public QSortFilterProxyModel
 public:
     explicit SortFilterModel(QObject *parent = nullptr);
 
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+    void setCompareFunction(std::function<sortFunc> func);
+
+protected:
     bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override;
 
-    bool hideCompleted() const;
-
-signals:
-    void hideCompletedChanged(bool hideCompleted);
-
-public slots:
-    void setHideCompleted(bool hideCompleted);
-
 private:
-    bool m_hideCompleted;
+    std::function<sortFunc> m_sortFunc;
 };
+
+bool alphabeticalInc(const Task *left, const Task *right);
+bool alphabeticalDec(const Task *left, const Task *right);
+bool createdInc(const Task *left, const Task *right);
+bool createdDec(const Task *left, const Task *right);
+bool dueInc(const Task *left, const Task *right);
+bool dueDec(const Task *left, const Task *right);
+bool completedInc(const Task *left, const Task *right);
+bool completedDec(const Task *left, const Task *right);
 
 #endif // SORTFILTERMODEL_H
