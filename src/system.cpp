@@ -4,7 +4,6 @@
 #include <QLocale>
 #include <QQmlEngine>
 #include <QDir>
-#include <QRegularExpression>
 
 #ifdef Q_OS_ANDROID
 #include <QCoreApplication>
@@ -59,7 +58,8 @@ QStringList System::translations()
 
     if (translationsDir.exists()) {
         QStringList translations = translationsDir.entryList({ "*.qm" });
-        translations.replaceInStrings(QRegularExpression("^[^_]+_(\\w+)\\.qm$"), "\\1");
+        translations.replaceInStrings("tasklist_", "");
+        translations.replaceInStrings(".qm", "");
         languages.append(translations);
         languages.sort();
     }

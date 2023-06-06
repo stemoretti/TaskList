@@ -1,7 +1,6 @@
 #include "list.h"
 
 #include <QJsonArray>
-#include <QRegularExpression>
 
 #include "uniqueid.h"
 
@@ -180,14 +179,10 @@ void List::filterTasks(const QString &term)
     if (term.isEmpty())
         return;
 
-    QRegularExpression re(term);
     for (Task *task : m_tasks) {
-        QRegularExpressionMatch match(re.match(task->name()));
-        if (match.hasPartialMatch() || match.hasMatch()) {
+        if (task->name().toUpper().contains(term.toUpper())) {
             if (!m_searchModel->contains(task))
                 m_searchModel->append(task);
-        // } else if (m_searchModel->contains(task)) {
-            // m_searchModel->remove(task);
         }
     }
 }

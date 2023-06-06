@@ -12,7 +12,7 @@
 Settings::Settings(QObject *parent)
     : QObject(parent)
     , m_settingsFilePath(System::dataPath() + "/settings.json")
-    , m_theme("Sytem")
+    , m_theme("System")
     , m_primaryColor("#607D8B") // Material.BlueGrey
     , m_accentColor("#FF9800") // Material.Orange
     , m_toolBarPrimary(true)

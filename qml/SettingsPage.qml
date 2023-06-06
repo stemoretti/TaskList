@@ -43,7 +43,7 @@ UI.AppStackPage {
 
                 UI.SettingsItem {
                     title: qsTr("Theme")
-                    subtitle: qsTr(themeDialog.model[themeDialog.selected()].name)
+                    subtitle: qsTr(themeDialog.selected())
                     onClicked: themeDialog.open()
                     Layout.fillWidth: true
                 }
@@ -177,27 +177,22 @@ UI.AppStackPage {
 
         function selected() {
             for (var i = 0; i < model.length; i++)
-                if (model[i].name === TL.Settings.theme)
-                    return i
+                if (model[i] === TL.Settings.theme)
+                    return model[i]
         }
 
         title: qsTr("Choose theme style")
-        model: [
-            { name: QT_TR_NOOP("Dark"), type: Material.Dark },
-            { name: QT_TR_NOOP("Light"), type: Material.Light },
-            { name: QT_TR_NOOP("System"), type: Material.System }
-        ]
+        model: [ QT_TR_NOOP("Dark"), QT_TR_NOOP("Light"), QT_TR_NOOP("System") ]
         delegate: RowLayout {
             spacing: 0
 
             RadioButton {
-                checked: modelData.name === TL.Settings.theme
-                text: qsTr(modelData.name)
+                checked: modelData === TL.Settings.theme
+                text: qsTr(modelData)
                 Layout.leftMargin: 4
                 onClicked: {
                     themeDialog.close()
-                    UI.Style.theme = modelData.type
-                    TL.Settings.theme = modelData.name
+                    TL.Settings.theme = modelData
                 }
             }
         }

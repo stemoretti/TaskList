@@ -14,6 +14,16 @@ UI.AppStackPage {
     readonly property int completedTasksCount: AppData.currentList?.completedTasksCount ?? 0
     readonly property int ordering: AppData.currentList?.ordering ?? List.UserReorder
 
+    function formatDate(d, t) {
+        var f = Date.fromLocaleString(Qt.locale(), d, "yyyy-MM-ddTHH:mm:ss")
+        return f.toLocaleDateString(Qt.locale(Settings.country), t)
+    }
+
+    function formatDateTime(d, t) {
+        var f = Date.fromLocaleString(Qt.locale(), d, "yyyy-MM-ddTHH:mm:ss")
+        return f.toLocaleString(Qt.locale(Settings.country), t)
+    }
+
     function _editTask(task) {
         // XXX: fix double tap
         if (root.stack.depth > 1)
@@ -113,11 +123,10 @@ UI.AppStackPage {
                     visible: model.dueDateTime
                     opacity: 0.6
                     text: {
-                        model.dueDateTime
-                        // if (model.allDay)
-                            // formatDate(model.dueDateTime, Locale.ShortFormat)
-                        // else
-                            // formatDateTime(model.dueDateTime, Locale.ShortFormat)
+                        if (model.allDay)
+                            formatDate(model.dueDateTime, Locale.ShortFormat)
+                        else
+                            formatDateTime(model.dueDateTime, Locale.ShortFormat)
                     }
                     elide: Text.ElideRight
                     Layout.fillWidth: false

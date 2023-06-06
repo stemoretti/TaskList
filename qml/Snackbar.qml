@@ -37,11 +37,6 @@ Popup {
     // y: (parent.height - implicitHeight) - 6
     y: 16
 
-    background: Rectangle {
-        color: Material.color(Material.Grey, Material.Shade900)
-        radius: 4
-    }
-
     onAboutToShow: timer.start()
     onAboutToHide: timer.stop()
 
@@ -73,7 +68,7 @@ Popup {
 
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 16
-            color: root.errorMessage ? "red" : "white"
+            color: Material.foreground
             wrapMode: Label.WordWrap
         }
     }
