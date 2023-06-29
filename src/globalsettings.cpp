@@ -1,6 +1,7 @@
-#include "settings.h"
+#include "globalsettings.h"
 
 #include <QDebug>
+#include <QCoreApplication>
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -9,13 +10,13 @@
 
 #include "system.h"
 
-Settings::Settings(QObject *parent)
+GlobalSettings::GlobalSettings(QObject *parent)
     : QObject(parent)
     , m_settingsFilePath(System::dataPath() + "/settings.json")
     , m_theme("System")
     , m_primaryColor("#607D8B") // Material.BlueGrey
     , m_accentColor("#FF9800") // Material.Orange
-    , m_toolBarPrimary(true)
+    , m_toolBarPrimary(false)
     , m_language("")
     , m_country("en_US")
     , m_strikeCompleted(false)
@@ -23,16 +24,18 @@ Settings::Settings(QObject *parent)
     , m_timeTumbler(false)
 {
     QQmlEngine::setObjectOwnership(this, QQmlEngine::CppOwnership);
+    QCoreApplication::installTranslator(&m_translator);
+    connect(this, &GlobalSettings::languageChanged, this, &GlobalSettings::updateTranslator);
 }
 
-Settings::~Settings()
+GlobalSettings::~GlobalSettings()
 {
-    writeSettingsFile();
+    saveSettings();
 }
 
-void Settings::readSettingsFile()
+void GlobalSettings::loadSettings()
 {
-    qDebug() << "Read the settings file";
+    qDebug() << "Loading settings...";
 
     QFile readFile(m_settingsFilePath);
 
@@ -67,12 +70,12 @@ void Settings::readSettingsFile()
     setTimeAMPM(jobj["timeAMPM"].toBool());
     setTimeTumbler(jobj["timeTumbler"].toBool());
 
-    qDebug() << "Settings file read";
+    qDebug() << "Settings loaded";
 }
 
-void Settings::writeSettingsFile() const
+void GlobalSettings::saveSettings() const
 {
-    qDebug() << "Write the settings file";
+    qDebug() << "Saving settings...";
 
     QFile writeFile(m_settingsFilePath);
 
@@ -93,15 +96,15 @@ void Settings::writeSettingsFile() const
     writeFile.write(QJsonDocument(jobj).toJson());
     writeFile.close();
 
-    qDebug() << "Settings file saved";
+    qDebug() << "Settings saved";
 }
 
-QString Settings::theme() const
+QString GlobalSettings::theme() const
 {
     return m_theme;
 }
 
-void Settings::setTheme(const QString &theme)
+void GlobalSettings::setTheme(const QString &theme)
 {
     if (m_theme == theme)
         return;
@@ -110,12 +113,12 @@ void Settings::setTheme(const QString &theme)
     Q_EMIT themeChanged(theme);
 }
 
-QColor Settings::primaryColor() const
+QColor GlobalSettings::primaryColor() const
 {
     return m_primaryColor;
 }
 
-void Settings::setPrimaryColor(const QColor &primaryColor)
+void GlobalSettings::setPrimaryColor(const QColor &primaryColor)
 {
     if (m_primaryColor == primaryColor)
         return;
@@ -124,12 +127,12 @@ void Settings::setPrimaryColor(const QColor &primaryColor)
     Q_EMIT primaryColorChanged(m_primaryColor);
 }
 
-QColor Settings::accentColor() const
+QColor GlobalSettings::accentColor() const
 {
     return m_accentColor;
 }
 
-void Settings::setAccentColor(const QColor &accentColor)
+void GlobalSettings::setAccentColor(const QColor &accentColor)
 {
     if (m_accentColor == accentColor)
         return;
@@ -138,12 +141,12 @@ void Settings::setAccentColor(const QColor &accentColor)
     Q_EMIT accentColorChanged(m_accentColor);
 }
 
-bool Settings::toolBarPrimary() const
+bool GlobalSettings::toolBarPrimary() const
 {
     return m_toolBarPrimary;
 }
 
-void Settings::setToolBarPrimary(bool toolBarPrimary)
+void GlobalSettings::setToolBarPrimary(bool toolBarPrimary)
 {
     if (m_toolBarPrimary == toolBarPrimary)
         return;
@@ -152,12 +155,12 @@ void Settings::setToolBarPrimary(bool toolBarPrimary)
     Q_EMIT toolBarPrimaryChanged(toolBarPrimary);
 }
 
-QString Settings::language() const
+QString GlobalSettings::language() const
 {
     return m_language;
 }
 
-void Settings::setLanguage(const QString &language)
+void GlobalSettings::setLanguage(const QString &language)
 {
     if (m_language == language)
         return;
@@ -166,12 +169,12 @@ void Settings::setLanguage(const QString &language)
     Q_EMIT languageChanged(m_language);
 }
 
-QString Settings::country() const
+QString GlobalSettings::country() const
 {
     return m_country;
 }
 
-void Settings::setCountry(const QString &country)
+void GlobalSettings::setCountry(const QString &country)
 {
     if (m_country == country)
         return;
@@ -180,12 +183,12 @@ void Settings::setCountry(const QString &country)
     Q_EMIT countryChanged(m_country);
 }
 
-bool Settings::strikeCompleted() const
+bool GlobalSettings::strikeCompleted() const
 {
     return m_strikeCompleted;
 }
 
-void Settings::setStrikeCompleted(bool strikeCompleted)
+void GlobalSettings::setStrikeCompleted(bool strikeCompleted)
 {
     if (m_strikeCompleted == strikeCompleted)
         return;
@@ -194,12 +197,12 @@ void Settings::setStrikeCompleted(bool strikeCompleted)
     Q_EMIT strikeCompletedChanged(strikeCompleted);
 }
 
-bool Settings::timeAMPM() const
+bool GlobalSettings::timeAMPM() const
 {
     return m_timeAMPM;
 }
 
-void Settings::setTimeAMPM(bool timeAMPM)
+void GlobalSettings::setTimeAMPM(bool timeAMPM)
 {
     if (m_timeAMPM == timeAMPM)
         return;
@@ -208,16 +211,23 @@ void Settings::setTimeAMPM(bool timeAMPM)
     Q_EMIT timeAMPMChanged(timeAMPM);
 }
 
-bool Settings::timeTumbler() const
+bool GlobalSettings::timeTumbler() const
 {
     return m_timeTumbler;
 }
 
-void Settings::setTimeTumbler(bool timeTumbler)
+void GlobalSettings::setTimeTumbler(bool timeTumbler)
 {
     if (m_timeTumbler == timeTumbler)
         return;
 
     m_timeTumbler = timeTumbler;
     Q_EMIT timeTumblerChanged(timeTumbler);
+}
+
+void GlobalSettings::updateTranslator(const QString &language)
+{
+    QQmlEngine *engine = qobject_cast<QQmlEngine *>(parent());
+    if (m_translator.load(QLocale(language), "tasklist", "_", ":/i18n"))
+        engine->retranslate();
 }

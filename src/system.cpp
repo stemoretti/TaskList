@@ -9,31 +9,25 @@
 #include <QCoreApplication>
 #include <QJniObject>
 
-#include "settings.h"
+#include "globalsettings.h"
 #endif
 
 System::System(QObject *parent)
     : QObject(parent)
 {
     QQmlEngine::setObjectOwnership(this, QQmlEngine::CppOwnership);
-    if (!checkDirs())
-        qFatal("App won't work - cannot create data directory.");
-}
 
-bool System::checkDirs() const
-{
-    QDir myDir;
+    QDir dir;
     QString path = System::dataPath();
-
-    if (!myDir.exists(path)) {
-        if (!myDir.mkpath(path)) {
+    if (!dir.exists(path)) {
+        if (!dir.mkpath(path)) {
             qWarning() << "Cannot create" << path;
-            return false;
+            qFatal("App won't work - cannot create data directory.");
         }
         qDebug() << "Created directory" << path;
     }
 
-    return true;
+    qDebug() << "Available translations:" << translations();
 }
 
 QString System::dataPath()
@@ -86,7 +80,7 @@ Java_com_github_stemoretti_tasklist_MainActivity_sendResult(JNIEnv *env,
 void System::startSpeechRecognizer() const
 {
 #ifdef Q_OS_ANDROID
-    auto javaString = QJniObject::fromString(Settings::instance->country());
+    auto javaString = QJniObject::fromString(GlobalSettings::instance->country());
     QJniObject activity = QNativeInterface::QAndroidApplication::context();
     activity.callMethod<void>("getSpeechInput", "(Ljava/lang/String;)V",
                               javaString.object());
@@ -114,9 +108,9 @@ void System::cancelAlarm(int id) const
 void System::updateStatusBarColor(bool darkTheme) const
 {
 #ifdef Q_OS_ANDROID
-    bool toolBarPrimary = Settings::instance->toolBarPrimary();
+    bool toolBarPrimary = GlobalSettings::instance->toolBarPrimary();
     QColor navbg = darkTheme ? "#1C1B1F" : "#FFFBFE";
-    QColor bg = toolBarPrimary ? Settings::instance->primaryColor().darker(140) : navbg;
+    QColor bg = toolBarPrimary ? GlobalSettings::instance->primaryColor().darker(140) : navbg;
     QJniObject activity = QNativeInterface::QAndroidApplication::context();
     activity.callMethod<void>("setStatusBarColor", "(IIZZ)V", bg.rgba(), navbg.rgba(),
                               toolBarPrimary, darkTheme);

@@ -39,19 +39,6 @@ target_compile_definitions(tasklist
         $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
 )
 
-target_compile_options(tasklist
-    PRIVATE
-        $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:
-            -Wall
-            -Wextra
-            -Wpedantic
-        >
-
-        $<$<CXX_COMPILER_ID:MSVC>:
-            /W4
-        >
-)
-
 target_link_libraries(tasklist
     PRIVATE
         Qt::Core
@@ -102,8 +89,8 @@ qt_add_qml_module(tasklist
         src/appdata.h
         src/list.cpp
         src/list.h
-        src/settings.cpp
-        src/settings.h
+        src/globalsettings.cpp
+        src/globalsettings.h
         src/system.cpp
         src/system.h
         src/task.cpp

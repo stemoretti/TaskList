@@ -7,7 +7,7 @@ import "languages.js" as JS
 
 import BaseUI as UI
 
-import TaskList as TL
+import TaskList
 
 UI.AppStackPage {
     id: root
@@ -50,7 +50,7 @@ UI.AppStackPage {
 
                 UI.SettingsItem {
                     title: qsTr("Primary Color")
-                    subtitle: colorDialog.getColorName(TL.Settings.primaryColor)
+                    subtitle: colorDialog.getColorName(GlobalSettings.primaryColor)
                     onClicked: {
                         colorDialog.selectAccentColor = false
                         colorDialog.open()
@@ -59,7 +59,7 @@ UI.AppStackPage {
 
                 UI.SettingsItem {
                     title: qsTr("Accent Color")
-                    subtitle: colorDialog.getColorName(TL.Settings.accentColor)
+                    subtitle: colorDialog.getColorName(GlobalSettings.accentColor)
                     onClicked: {
                         colorDialog.selectAccentColor = true
                         colorDialog.open()
@@ -69,8 +69,8 @@ UI.AppStackPage {
                 UI.SettingsCheckItem {
                     title: qsTr("Tool bar primary color")
                     subtitle: qsTr("Use the primary color for the tool bar background")
-                    checkState: TL.Settings.toolBarPrimary ? Qt.Checked : Qt.Unchecked
-                    onClicked: TL.Settings.toolBarPrimary = !TL.Settings.toolBarPrimary
+                    checkState: GlobalSettings.toolBarPrimary ? Qt.Checked : Qt.Unchecked
+                    onClicked: GlobalSettings.toolBarPrimary = !GlobalSettings.toolBarPrimary
                     Layout.fillWidth: true
                 }
 
@@ -78,13 +78,13 @@ UI.AppStackPage {
 
                 UI.SettingsItem {
                     title: qsTr("Language")
-                    subtitle: JS.getLanguageFromCode(TL.Settings.language)
+                    subtitle: JS.getLanguageFromCode(GlobalSettings.language)
                     onClicked: languageDialog.open()
                 }
 
                 UI.SettingsItem {
-                    property string name: JS.getCountryFromCode(TL.Settings.country)
-                    property string nativeName: JS.getCountryFromCode(TL.Settings.country, "native")
+                    property string name: JS.getCountryFromCode(GlobalSettings.country)
+                    property string nativeName: JS.getCountryFromCode(GlobalSettings.country, "native")
 
                     title: qsTr("Country")
                     subtitle: nativeName + ((name !== nativeName) ? " (" + name + ")" : "")
@@ -96,24 +96,24 @@ UI.AppStackPage {
                 UI.SettingsCheckItem {
                     title: qsTr("Strikethrough completed tasks")
                     subtitle: qsTr("Add a strikethrough over the name of completed tasks in list view")
-                    checkState: TL.Settings.strikeCompleted ? Qt.Checked : Qt.Unchecked
-                    onClicked: TL.Settings.strikeCompleted = !TL.Settings.strikeCompleted
+                    checkState: GlobalSettings.strikeCompleted ? Qt.Checked : Qt.Unchecked
+                    onClicked: GlobalSettings.strikeCompleted = !GlobalSettings.strikeCompleted
                     Layout.fillWidth: true
                 }
 
                 UI.SettingsCheckItem {
                     title: qsTr("Use AM/PM time selection")
                     subtitle: qsTr("The time is selected using AM/PM clock")
-                    checkState: TL.Settings.timeAMPM ? Qt.Checked : Qt.Unchecked
-                    onClicked: TL.Settings.timeAMPM = !TL.Settings.timeAMPM
+                    checkState: GlobalSettings.timeAMPM ? Qt.Checked : Qt.Unchecked
+                    onClicked: GlobalSettings.timeAMPM = !GlobalSettings.timeAMPM
                     Layout.fillWidth: true
                 }
 
                 UI.SettingsCheckItem {
                     title: qsTr("Use the tumbler time selector")
                     subtitle: qsTr("Select the time using a tumbler clock")
-                    checkState: TL.Settings.timeTumbler ? Qt.Checked : Qt.Unchecked
-                    onClicked: TL.Settings.timeTumbler = !TL.Settings.timeTumbler
+                    checkState: GlobalSettings.timeTumbler ? Qt.Checked : Qt.Unchecked
+                    onClicked: GlobalSettings.timeTumbler = !GlobalSettings.timeTumbler
                     Layout.fillWidth: true
                 }
 
@@ -138,7 +138,7 @@ UI.AppStackPage {
         id: loadBackupDialog
 
         currentFolder: StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
-        onAccepted: TL.AppData.readListFile(selectedFile)
+        onAccepted: AppData.readListFile(selectedFile)
     }
 
     FileDialog {
@@ -151,7 +151,7 @@ UI.AppStackPage {
                 .arg(currentFolder)
                 .arg(Qt.formatDateTime(new Date(), "yyyy-MM-dd_HH:mm"))
         }
-        onAccepted: TL.AppData.writeListFile(selectedFile)
+        onAccepted: AppData.writeListFile(selectedFile)
     }
 
     UI.EdgeEffect {
@@ -177,7 +177,7 @@ UI.AppStackPage {
 
         function selected() {
             for (var i = 0; i < model.length; i++)
-                if (model[i] === TL.Settings.theme)
+                if (model[i] === GlobalSettings.theme)
                     return model[i]
         }
 
@@ -187,12 +187,12 @@ UI.AppStackPage {
             spacing: 0
 
             RadioButton {
-                checked: modelData === TL.Settings.theme
+                checked: modelData === GlobalSettings.theme
                 text: qsTr(modelData)
                 Layout.leftMargin: 4
                 onClicked: {
                     themeDialog.close()
-                    TL.Settings.theme = modelData
+                    GlobalSettings.theme = modelData
                 }
             }
         }
@@ -264,9 +264,9 @@ UI.AppStackPage {
                 onClicked: {
                     colorDialog.close()
                     if (colorDialog.selectAccentColor)
-                        TL.Settings.accentColor = Material.color(modelData.bg)
+                        GlobalSettings.accentColor = Material.color(modelData.bg)
                     else
-                        TL.Settings.primaryColor = Material.color(modelData.bg)
+                        GlobalSettings.primaryColor = Material.color(modelData.bg)
                 }
             }
         }
@@ -276,11 +276,11 @@ UI.AppStackPage {
         id: languageDialog
 
         title: qsTr("Language")
-        model: TL.System.translations()
+        model: System.translations()
         delegate: RadioButton {
-            checked: modelData === TL.Settings.language
+            checked: modelData === GlobalSettings.language
             text: JS.getLanguageFromCode(modelData)
-            onClicked: { languageDialog.close(); TL.Settings.language = modelData }
+            onClicked: { languageDialog.close(); GlobalSettings.language = modelData }
         }
     }
 }

@@ -1,16 +1,17 @@
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef GLOBALSETTINGS_H
+#define GLOBALSETTINGS_H
 
 #include <QObject>
 #include <QColor>
 #include <QString>
+#include <QTranslator>
 
 #include <QtQml/qqmlregistration.h>
 
 class QQmlEngine;
 class QJSEngine;
 
-class Settings : public QObject
+class GlobalSettings : public QObject
 {
     Q_OBJECT
     QML_ELEMENT
@@ -27,14 +28,14 @@ class Settings : public QObject
     Q_PROPERTY(bool timeTumbler READ timeTumbler WRITE setTimeTumbler NOTIFY timeTumblerChanged)
 
 public:
-    ~Settings();
+    ~GlobalSettings();
 
-    inline static Settings *instance;
-    static void init(QObject *parent = nullptr) { instance = new Settings(parent); }
-    static Settings *create(QQmlEngine *, QJSEngine *) { return instance; }
+    inline static GlobalSettings *instance;
+    static void init(QObject *parent = nullptr) { instance = new GlobalSettings(parent); }
+    static GlobalSettings *create(QQmlEngine *, QJSEngine *) { return instance; }
 
-    void readSettingsFile();
-    void writeSettingsFile() const;
+    Q_INVOKABLE void loadSettings();
+    Q_INVOKABLE void saveSettings() const;
 
     QString theme() const;
     void setTheme(const QString &theme);
@@ -75,9 +76,12 @@ Q_SIGNALS:
     void timeTumblerChanged(bool timeTumbler);
 
 private:
-    explicit Settings(QObject *parent = nullptr);
-    Q_DISABLE_COPY_MOVE(Settings)
+    explicit GlobalSettings(QObject *parent = nullptr);
+    Q_DISABLE_COPY_MOVE(GlobalSettings)
 
+    void updateTranslator(const QString &language);
+
+    QTranslator m_translator;
     QString m_settingsFilePath;
 
     QString m_theme;
@@ -91,4 +95,4 @@ private:
     bool m_timeTumbler;
 };
 
-#endif // SETTINGS_H
+#endif

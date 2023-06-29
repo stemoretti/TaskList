@@ -2,24 +2,23 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import QtQuick.Controls.Material
-import QtQuick.Window
 
 import BaseUI as UI
 
 Popup {
     id: root
 
-    property bool errorMessage: false
-
     function showMessage(text) {
-        root.errorMessage = false
+        root._errorMessage = false
         _start(text)
     }
 
     function showError(text) {
-        root.errorMessage = true
+        root._errorMessage = true
         _start(text)
     }
+
+    property bool _errorMessage: false
 
     function _start(text) {
         label.text = text
@@ -34,7 +33,6 @@ Popup {
     implicitWidth: parent.width > parent.height ? parent.width * 0.50 : parent.width * 0.95
 
     x: (parent.width - implicitWidth) / 2
-    // y: (parent.height - implicitHeight) - 6
     y: 16
 
     onAboutToShow: timer.start()
@@ -53,7 +51,7 @@ Popup {
         width: parent.width
 
         UI.Icon {
-            visible: root.errorMessage
+            visible: root._errorMessage
             width: 24
             height: 24
             icon: UI.Icons.error

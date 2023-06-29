@@ -21,8 +21,6 @@ public:
     static void init(QObject *parent = nullptr) { instance = new System(parent); }
     static System *create(QQmlEngine *, QJSEngine *) { return instance; }
 
-    bool checkDirs() const;
-
     Q_INVOKABLE static QString dataPath();
     Q_INVOKABLE static QString language();
     Q_INVOKABLE static QString locale();

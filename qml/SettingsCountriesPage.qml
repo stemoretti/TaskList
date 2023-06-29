@@ -42,7 +42,7 @@ UI.AppStackPage {
                 }
             }
             onClicked: {
-                Settings.country = modelData
+                GlobalSettings.country = modelData
                 pop()
             }
         }

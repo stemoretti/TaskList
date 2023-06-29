@@ -17,6 +17,16 @@ Popup {
 
     signal accepted()
 
+    function formattedDate() {
+        var f = Date.fromLocaleString(Qt.locale(), root.dateString, "yyyy-MM-dd")
+        return f.toLocaleDateString(Qt.locale(GlobalSettings.country), Locale.ShortFormat)
+    }
+
+    function formattedTime() {
+        var f = Date.fromLocaleString(Qt.locale(), root.timeString, "HH:mm:ss")
+        return f.toLocaleTimeString(Qt.locale(GlobalSettings.country), Locale.ShortFormat)
+    }
+
     parent: Overlay.overlay
 
     x: (parent.width - width) / 2
@@ -56,44 +66,42 @@ Popup {
                 width: parent.width
                 spacing: 0
 
-                RowLayout {
+                GridLayout {
+                    columns: 2
+
                     Layout.alignment: Qt.AlignHCenter
-                    Layout.fillWidth: true
 
-                    ColumnLayout {
-                        Layout.rightMargin: 30
-
-                        UI.ButtonFlat {
-                            text: root.hasTime && root.timeString ? root.timeString : qsTr("No time")
-                            onClicked: timePicker.item.open()
-                        }
-
-                        UI.ButtonFlat {
-                            enabled: root.hasTime && root.timeString
-                            text: qsTr("Cancel time")
-                            onClicked: root.hasTime = false
-                        }
+                    ToolButton {
+                        icon.source: UI.Icons.date_range
+                        text: root.hasDate && root.dateString ? formattedDate() : qsTr("No date")
                     }
 
-                    ColumnLayout {
-                        Layout.leftMargin: 30
+                    ToolButton {
+                        icon.source: UI.Icons.access_time
+                        text: root.hasTime && root.timeString ? formattedTime() : qsTr("Select time")
+                        onClicked: timePicker.item.open()
+                    }
 
-                        UI.ButtonFlat {
-                            text: root.hasDate && root.dateString ? root.dateString : qsTr("No date")
-                        }
+                    ToolButton {
+                        enabled: root.hasDate && root.dateString
+                        icon.source: UI.Icons.not_interested
+                        text: qsTr("Cancel date")
+                        onClicked: root.hasTime = root.hasDate = false
+                    }
 
-                        UI.ButtonFlat {
-                            enabled: root.hasDate && root.dateString
-                            text: qsTr("Cancel date")
-                            onClicked: root.hasTime = root.hasDate = false
-                        }
+                    ToolButton {
+                        enabled: root.hasTime && root.timeString
+                        icon.source: UI.Icons.not_interested
+                        text: qsTr("Cancel time")
+                        onClicked: root.hasTime = false
                     }
                 }
 
                 UI.DatePicker {
                     id: datePicker
-                    locale: Settings.country
-                    onDateStringChanged: {
+                    locale: GlobalSettings.country
+                    selected: root.hasDate
+                    onTappedOnADate: {
                         root.hasDate = true
                         root.dateString = datePicker.dateString
                     }
@@ -133,7 +141,7 @@ Popup {
     Component {
         id: timePickerCircular
         UI.TimePickerCircular {
-            time24h: !Settings.timeAMPM
+            time24h: !GlobalSettings.timeAMPM
             onAccepted: {
                 root.dateString = datePicker.dateString
                 root.timeString = timeString
@@ -146,7 +154,7 @@ Popup {
     Component {
         id: timePickerTumbler
         UI.TimePickerTumbler {
-            timeAMPM: Settings.timeAMPM
+            timeAMPM: GlobalSettings.timeAMPM
             onAccepted: {
                 root.dateString = datePicker.dateString
                 root.timeString = timeString
@@ -158,6 +166,6 @@ Popup {
 
     Loader {
         id: timePicker
-        sourceComponent: Settings.timeTumbler ? timePickerTumbler : timePickerCircular
+        sourceComponent: GlobalSettings.timeTumbler ? timePickerTumbler : timePickerCircular
     }
 }

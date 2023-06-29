@@ -15,17 +15,17 @@ Item {
 
     function formatDate(d) {
         var f = Date.fromLocaleString(Qt.locale(), d, "yyyy-MM-ddTHH:mm:ss")
-        return f.toLocaleDateString(Qt.locale(Settings.country))
+        return f.toLocaleDateString(Qt.locale(GlobalSettings.country))
     }
 
     function formatDateTime(d) {
         var f = Date.fromLocaleString(Qt.locale(), d, "yyyy-MM-ddTHH:mm:ss")
-        return f.toLocaleString(Qt.locale(Settings.country))
+        return f.toLocaleString(Qt.locale(GlobalSettings.country))
     }
 
     function formatDateSection(d) {
         var f = Date.fromLocaleString(Qt.locale(), d, "yyyy-MM-dd")
-        return f.toLocaleDateString(Qt.locale(Settings.country))
+        return f.toLocaleDateString(Qt.locale(GlobalSettings.country))
     }
 
     Component {
@@ -73,7 +73,7 @@ Item {
 
                     UI.LabelSubheading {
                         text: model.name
-                        font.strikeout: Settings.strikeCompleted && model.completed
+                        font.strikeout: GlobalSettings.strikeCompleted && model.completed
                         elide: Text.ElideRight
                     }
 

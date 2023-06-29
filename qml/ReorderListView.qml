@@ -13,12 +13,12 @@ Item {
 
     function formatDate(d, t) {
         var f = Date.fromLocaleString(Qt.locale(), d, "yyyy-MM-ddTHH:mm:ss")
-        return f.toLocaleDateString(Qt.locale(Settings.country), t)
+        return f.toLocaleDateString(Qt.locale(GlobalSettings.country), t)
     }
 
     function formatDateTime(d, t) {
         var f = Date.fromLocaleString(Qt.locale(), d, "yyyy-MM-ddTHH:mm:ss")
-        return f.toLocaleString(Qt.locale(Settings.country), t)
+        return f.toLocaleString(Qt.locale(GlobalSettings.country), t)
     }
 
     Component {
@@ -81,7 +81,7 @@ Item {
 
                         UI.LabelSubheading {
                             text: model.name
-                            font.strikeout: Settings.strikeCompleted && model.completed
+                            font.strikeout: GlobalSettings.strikeCompleted && model.completed
                             elide: Text.ElideRight
                         }
 
